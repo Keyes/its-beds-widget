@@ -7,7 +7,7 @@ const getApiUrl = (location) => {
 
 init();
 
-function init() {
+async function init() {
   const widget = await createWidget();
   if (!config.runsInWidget) {
     await widget.presentSmall();
