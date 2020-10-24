@@ -5,13 +5,17 @@ const getApiUrl = (location) => {
   return apiUrlBase;
 }
 
-const widget = await createWidget();
-if (!config.runsInWidget) {
-  await widget.presentSmall();
-}
+init();
 
-Script.setWidget(widget);
-Script.complete();
+function init() {
+  const widget = await createWidget();
+  if (!config.runsInWidget) {
+    await widget.presentSmall();
+  }
+
+  Script.setWidget(widget);
+  Script.complete();
+}
 
 async function createWidget(items) {
   const data = await getData();
