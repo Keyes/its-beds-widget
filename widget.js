@@ -1,7 +1,7 @@
-// Licence: juliankern.com; CC BY 3.0 DE
+/* Licence: juliankern.com; CC BY 3.0 DE */
 const apiUrlBase = 'http://intensiv-widget.juliankern.com/beds';
 const getApiUrl = (location) => {
-  if (location) return `${apiUrlBase}?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}`;
+  if (location) { return `${apiUrlBase}?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}`; }
   return apiUrlBase;
 }
 
