@@ -42,7 +42,7 @@ async function createWidget(items) {
     label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
     const location = list.addText('Deutschland');
     location.font = Font.lightSystemFont(12);
-    list.refreshAfterDate = new Date(Date.now() + 60 * 60 * 1000);
+    list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
 
     list.addSpacer(6);
     const dateFormatter = new DateFormatter();
