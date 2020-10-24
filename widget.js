@@ -1,7 +1,8 @@
 /* Licence: juliankern.com; CC BY 3.0 DE */
 const apiUrlBase = 'http://intensiv-widget.juliankern.com/beds';
-const getApiUrl = (location) => {
+const getApiUrl = (location, state) => {
   if (location) { return `${apiUrlBase}?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}`; }
+  if (state) { return `${apiUrlBase}?state=${state}`; }
   return apiUrlBase;
 }
 
@@ -20,7 +21,7 @@ async function init() {
 async function createWidget(items) {
   const data = await getData();
   const list = new ListWidget();
-  const header = list.addText("🛏 Freie Intensivbetten");
+  const header = list.addText("🛏 Freie ITS-Betten");
   header.font = Font.mediumSystemFont(12);
 
   if (data) {
@@ -60,8 +61,14 @@ async function createWidget(items) {
 
 async function getData() {
   try {
-    const location = await getLocation();
-    const foundData = await new Request(getApiUrl(location)).loadJSON();
+    let foundData;
+    
+    if (args.widgetParameter) {
+      foundData = await new Request(getApiUrl(null, args.widgetParameter)).loadJSON();
+    } else {
+      const location = await getLocation();
+      foundData = await new Request(getApiUrl(location)).loadJSON();
+    }
 
     return foundData;
   } catch (e) {
@@ -71,13 +78,8 @@ async function getData() {
 
 async function getLocation() {
   try {
-    if (args.widgetParameter) {
-      const fixedCoordinates = args.widgetParameter.split(",").map(parseFloat);
-      return { latitude: fixedCoordinates[0], longitude: fixedCoordinates[1] };
-    } else {
-      Location.setAccuracyToThreeKilometers();
-      return await Location.current();
-    }
+    Location.setAccuracyToThreeKilometers();
+    return await Location.current();
   } catch (e) {
     return null;
   }
