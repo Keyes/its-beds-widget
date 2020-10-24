@@ -19,7 +19,16 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so auto-minify job can access it
+      - uses: actions/checkout@v2
+
       - name: Auto Minify
-        # You may pin to the exact commit or the version.
-        # uses: nizarmah/auto-minify@f8323743bad5df5496e89eb086cb8aeb5e523866
-        uses: nizarmah/auto-minify@v2.0
+        uses: nizarmah/auto-minify@master
+
+      # Auto commits minified files to the repository
+      # Ignore it if you don't want to commit the files to the repository 
+      - name: Auto committing minified files
+        uses: stefanzweifel/git-auto-commit-action@v3.0.0
+        with:
+          commit_message: "Github Action: Auto Minified JS and CSS files"
+          branch: ${{ github.ref }}
