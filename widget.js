@@ -35,21 +35,55 @@ async function createWidget(items) {
   if (data) {
     list.addSpacer();
 
+    
     if (data.state) {
-      const label = list.addText(data.state.used.toFixed(2) + "%");
+      const bedsLabel = list.addStack();
+      bedsLabel.layoutHorizontally();
+      bedsLabel.centerAlignContent();
+      bedsLabel.useDefaultPadding();
+
+      const label = bedsLabel.addText(data.state.used.toFixed(2) + "%");
       label.font = Font.mediumSystemFont(22);
       label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
 
-      const location = list.addText(data.state.name);
-      location.font = Font.lightSystemFont(12);
+      if (CONFIG.layout === 'extended') {
+        const location = bedsLabel.addText(data.state.name);
+        location.font = Font.mediumSystemFont(10);
+        location.textColor = Color.lightGray();
+
+        const label = list.addText(`${data.state.absolute.free}/${data.state.absolute.total}`);
+        label.font = Font.mediumSystemFont(12);
+        label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
+      } else {
+        const location = list.addText(data.state.name);
+        location.font = Font.lightSystemFont(12);
+      }
+      
       list.addSpacer(4);
     }
 
-    const label = list.addText(data.overall.used.toFixed(2) + "%");
+    const bedsLabel = list.addStack();
+    bedsLabel.layoutHorizontally();
+    bedsLabel.centerAlignContent();
+    bedsLabel.useDefaultPadding();
+
+    const label = bedsLabel.addText(data.overall.used.toFixed(2) + "%");
     label.font = Font.mediumSystemFont(22);
     label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
-    const location = list.addText('Deutschland');
-    location.font = Font.lightSystemFont(12);
+    
+    if (CONFIG.layout === 'extended') {
+      const location = bedsLabel.addText('DE');
+      location.font = Font.mediumSystemFont(10);
+      location.textColor = Color.lightGray();
+
+      const label = list.addText(`${data.overall.absolute.free}/${data.overall.absolute.total}`);
+      label.font = Font.mediumSystemFont(12);
+      label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
+    } else {
+      const location = list.addText('Deutschland');
+      location.font = Font.lightSystemFont(12);
+    }
+
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
 
     list.addSpacer(6);
