@@ -39,15 +39,15 @@ async function createWidget(items) {
     if (data.state) {
       const bedsLabel = list.addStack();
       bedsLabel.layoutHorizontally();
-      bedsLabel.centerAlignContent();
-      bedsLabel.useDefaultPadding();
+      bedsLabel.bottomAlignContent();
+      bedsLabel.setPadding(0, 2);
 
       const label = bedsLabel.addText(data.state.used.toFixed(2) + "%");
       label.font = Font.mediumSystemFont(22);
       label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
 
       if (CONFIG.layout === 'extended') {
-        const location = bedsLabel.addText(data.state.name);
+        const location = bedsLabel.addText(data.state.shortName);
         location.font = Font.mediumSystemFont(10);
         location.textColor = Color.lightGray();
 
@@ -64,8 +64,8 @@ async function createWidget(items) {
 
     const bedsLabel = list.addStack();
     bedsLabel.layoutHorizontally();
-    bedsLabel.centerAlignContent();
-    bedsLabel.useDefaultPadding();
+    bedsLabel.bottomAlignContent();
+    bedsLabel.setPadding(0, 2);
 
     const label = bedsLabel.addText(data.overall.used.toFixed(2) + "%");
     label.font = Font.mediumSystemFont(22);
