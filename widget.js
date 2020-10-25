@@ -39,7 +39,7 @@ async function createWidget(items) {
     if (data.state) {
       const bedsLabel = list.addStack();
       bedsLabel.layoutHorizontally();
-      bedsLabel.bottomAlignContent();
+      bedsLabel.centerAlignContent();
       bedsLabel.useDefaultPadding();
 
       const label = bedsLabel.addText(data.state.used.toFixed(2) + "%");
@@ -64,7 +64,7 @@ async function createWidget(items) {
 
     const bedsLabel = list.addStack();
     bedsLabel.layoutHorizontally();
-    bedsLabel.bottomAlignContent();
+    bedsLabel.centerAlignContent();
     bedsLabel.useDefaultPadding();
 
     const label = bedsLabel.addText(data.overall.used.toFixed(2) + "%");
