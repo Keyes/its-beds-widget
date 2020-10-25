@@ -6,11 +6,14 @@ const getApiUrl = (location, state) => {
   return apiUrlBase;
 }
 
-init();
-
 const defaultCfg = {
   layout: 'simple',
 };
+
+if (typeof cfg === 'undefined') cfg = {};
+const CFG = Object.assign({}, defaultCfg, cfg);
+
+init();
 
 async function init() {
   const widget = await createWidget();
@@ -18,7 +21,7 @@ async function init() {
     await widget.presentSmall();
   }
 
-  console.log('CONFIG', defaultCfg, cfg, Object.assign(defaultCfg, cfg));
+  console.log(CFG);
 
   Script.setWidget(widget);
   Script.complete();
