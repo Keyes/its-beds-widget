@@ -10,6 +10,7 @@ const defaultCfg = {
   layout: 'simple',
 };
 
+console.log(typeof cfg);
 if (typeof cfg === 'undefined') cfg = {};
 const CFG = Object.assign({}, defaultCfg, cfg);
 
