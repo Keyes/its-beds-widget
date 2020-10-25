@@ -1,8 +1,8 @@
 # its-beds-widget
 
-This is a widget for [Scriptable](https://scriptable.app). To use this widget, add a new script to Scriptable, and insert this code:
-
 ![Screenshot](screenshot.jpg "Screenshot")
+
+This is a widget for [Scriptable](https://scriptable.app). To use this widget, add a new script to Scriptable, and insert this code:
 
 ```
 // Licence: juliankern.com; CC BY 3.0 DE
