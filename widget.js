@@ -8,7 +8,7 @@ const getApiUrl = (location, state) => {
 
 init();
 
-const defaultConfig = {
+const defaultCfg = {
   layout: 'simple',
 };
 
@@ -18,7 +18,7 @@ async function init() {
     await widget.presentSmall();
   }
 
-  console.log('CONFIG', defaultConfig, config, Object.assign(defaultConfig, config));
+  console.log('CONFIG', defaultCfg, cfg, Object.assign(defaultCfg, cfg));
 
   Script.setWidget(widget);
   Script.complete();
