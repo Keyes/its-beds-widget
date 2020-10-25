@@ -10,11 +10,7 @@ const defaultCfg = {
   layout: 'simple',
 };
 
-console.log(typeof cfg);
-console.log(typeof arguments);
-console.log(arguments);
-if (typeof cfg === 'undefined') cfg = {};
-const CFG = Object.assign({}, defaultCfg, cfg);
+const CONFIG = Object.assign({}, defaultCfg, arguments[0]);
 
 init();
 
@@ -24,7 +20,7 @@ async function init() {
     await widget.presentSmall();
   }
 
-  console.log(CFG);
+  console.log(CONFIG.layout);
 
   Script.setWidget(widget);
   Script.complete();
