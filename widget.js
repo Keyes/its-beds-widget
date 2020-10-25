@@ -11,6 +11,8 @@ const defaultCfg = {
 };
 
 console.log(typeof cfg);
+console.log(typeof arguments);
+console.log(arguments);
 if (typeof cfg === 'undefined') cfg = {};
 const CFG = Object.assign({}, defaultCfg, cfg);
 
