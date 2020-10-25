@@ -51,6 +51,7 @@ async function createWidget(items) {
 
     const updated = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
     updated.font = Font.lightSystemFont(9);
+    updated.textColor = Color.lightGray();
   } else {
     list.addSpacer();
     list.addText("Daten nicht verfügbar");
