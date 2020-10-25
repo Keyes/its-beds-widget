@@ -47,7 +47,7 @@ async function createWidget(items) {
       label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
 
       if (CONFIG.layout === 'extended') {
-        const location = bedsLabel.addText('\n' + data.state.shortName);
+        const location = bedsLabel.addText(`.\n${data.state.shortName}`);
         location.font = Font.mediumSystemFont(10);
         location.textColor = Color.gray();
 
@@ -72,7 +72,7 @@ async function createWidget(items) {
     label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
     
     if (CONFIG.layout === 'extended') {
-      const location = bedsLabel.addText('\nDE');
+      const location = bedsLabel.addText('.\nDE');
       location.font = Font.mediumSystemFont(10);
       location.textColor = Color.gray();
 
