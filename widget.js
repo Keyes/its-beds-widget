@@ -48,7 +48,7 @@ async function createWidget(items) {
 
       if (CONFIG.layout === 'extended') {
         const location = bedsLabel.addText(`.\n${data.state.shortName}`);
-        location.font = Font.mediumSystemFont(10);
+        location.font = Font.mediumSystemFont(9);
         location.textColor = Color.gray();
 
         const label = list.addText(`${data.state.absolute.free}/${data.state.absolute.total}`);
@@ -73,7 +73,7 @@ async function createWidget(items) {
     
     if (CONFIG.layout === 'extended') {
       const location = bedsLabel.addText('.\nDE');
-      location.font = Font.mediumSystemFont(10);
+      location.font = Font.mediumSystemFont(9);
       location.textColor = Color.gray();
 
       const label = list.addText(`${data.overall.absolute.free}/${data.overall.absolute.total}`);
