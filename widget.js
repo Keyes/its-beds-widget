@@ -40,7 +40,7 @@ async function createWidget(items) {
       const bedsLabel = list.addStack();
       bedsLabel.layoutHorizontally();
       bedsLabel.bottomAlignContent();
-      bedsLabel.setPadding(0, 2);
+      bedsLabel.setPadding(0, 2, 0, 0);
 
       const label = bedsLabel.addText(data.state.used.toFixed(2) + "%");
       label.font = Font.mediumSystemFont(22);
@@ -65,7 +65,7 @@ async function createWidget(items) {
     const bedsLabel = list.addStack();
     bedsLabel.layoutHorizontally();
     bedsLabel.bottomAlignContent();
-    bedsLabel.setPadding(0, 2);
+    bedsLabel.setPadding(0, 2, 0, 0);
 
     const label = bedsLabel.addText(data.overall.used.toFixed(2) + "%");
     label.font = Font.mediumSystemFont(22);
