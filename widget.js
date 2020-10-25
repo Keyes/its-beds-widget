@@ -40,7 +40,7 @@ async function createWidget(items) {
       const bedsLabel = list.addStack();
       bedsLabel.layoutHorizontally();
       bedsLabel.bottomAlignContent();
-      bedsLabel.setPadding(0, 4, 2, 0);
+      bedsLabel.useDefaultPadding();
 
       const label = bedsLabel.addText(data.state.used.toFixed(2) + "%");
       label.font = Font.mediumSystemFont(22);
@@ -55,7 +55,7 @@ async function createWidget(items) {
         label.font = Font.mediumSystemFont(12);
         label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
       } else {
-        const location = list.addText(data.state.name);
+        const location = list.addText(' ' + data.state.name);
         location.font = Font.lightSystemFont(12);
       }
       
@@ -65,14 +65,14 @@ async function createWidget(items) {
     const bedsLabel = list.addStack();
     bedsLabel.layoutHorizontally();
     bedsLabel.bottomAlignContent();
-    bedsLabel.setPadding(0, 4, 2, 0);
+    bedsLabel.useDefaultPadding();
 
     const label = bedsLabel.addText(data.overall.used.toFixed(2) + "%");
     label.font = Font.mediumSystemFont(22);
     label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
     
     if (CONFIG.layout === 'extended') {
-      const location = bedsLabel.addText('DE');
+      const location = bedsLabel.addText(' DE');
       location.font = Font.mediumSystemFont(10);
       location.textColor = Color.gray();
 
