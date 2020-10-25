@@ -18,7 +18,7 @@ async function init() {
     await widget.presentSmall();
   }
 
-  console.log('CONFIG', config, Object.assign(defaultConfig, config));
+  console.log('CONFIG', defaultConfig, config, Object.assign(defaultConfig, config));
 
   Script.setWidget(widget);
   Script.complete();
