@@ -1,6 +1,8 @@
 # its-beds-widget
 
+Simple layout:
 ![Screenshot](screenshot.jpg "New Screenshot")
+Extended layout:
 ![Extended Screenshot](screenshot_extended.jpg "Extended Screenshot")
 
 This is a widget for [Scriptable](https://scriptable.app). To use this widget, add a new script to Scriptable, and insert this code:
@@ -15,9 +17,11 @@ This will load the current version, and keep it updated.
 
 ## Features
 - Shows the situation of ITS beds in your current state (germany only), as well as in the whole country
-- Add your state short code as parameter to change the displayed state (for short codes see below)
-- Shows the timestamp of the last update - official updates happen usually once per hour 
-- Multiple layouts (see config)
+- Add your state **short code** as parameter to change the displayed state (for short codes see below)
+- Shows the **timestamp** of the last update - official updates happen usually once per hour 
+- Multiple **layouts** (see config)
+- Shows trend arrows how the free beds changed compared to yesterday
+    - additionally shows relative mount of beds added/removed in extended layout
 
 ### Config
 The following options are possible
