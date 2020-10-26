@@ -33,15 +33,16 @@ async function createWidget(items) {
   if (data) {
     list.addSpacer();
 
-    const weekData = { 
-      overall: saveLoadData(data.overall, 'DE'),
-      state: saveLoadData(data.state, data.state.shortName),
+    let weekData = { 
+      overall: saveLoadData(data.overall, 'DE')
     };
     
     if (data.state) {
-      const label = list.addText(`${data.state.used.toFixed(2)}% ${getBedsStateTrend(data, weekData)}`);
+      weekData.state = saveLoadData(data.state, data.state.shortName);
+
+      const label = list.addText(`${data.state.used.toFixed(2)}% ${getBedsTrend(data.state, weekData.state)}`);
       label.font = Font.mediumSystemFont(22);
-      label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
+      label.textColor = getPercentageColor(data.state.used);
       
       const bedsLabel = list.addStack();
       bedsLabel.layoutHorizontally();
@@ -55,7 +56,7 @@ async function createWidget(items) {
 
         const label = bedsLabel.addText(`${data.state.absolute.free}/${data.state.absolute.total}`);
         label.font = Font.mediumSystemFont(12);
-        label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
+        label.textColor = getPercentageColor(data.state.used);
       } else {
         const location = bedsLabel.addText(data.state.name);
         location.font = Font.lightSystemFont(12);
@@ -65,9 +66,9 @@ async function createWidget(items) {
     }
 
     
-    const label = list.addText(`${data.overall.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
+    const label = list.addText(`${data.overall.used.toFixed(2)}% ${getBedsTrend(data.overall, weekData.overall)}`);
     label.font = Font.mediumSystemFont(22);
-    label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
+    label.textColor = getPercentageColor(data.overall.used);
     
     const bedsLabel = list.addStack();
     bedsLabel.layoutHorizontally();
@@ -81,7 +82,7 @@ async function createWidget(items) {
 
       const label = bedsLabel.addText(`${data.overall.absolute.free}/${data.overall.absolute.total}`);
       label.font = Font.mediumSystemFont(12);
-      label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
+      label.textColor = getPercentageColor(data.overall.used);
     } else {
       const location = list.addText('Deutschland');
       location.font = Font.lightSystemFont(12);
@@ -103,6 +104,10 @@ async function createWidget(items) {
   }
 
   return list;
+}
+
+function getPercentageColor(value) {
+  return value <= 25 ? Color.red() : value <= 50 ? Color.orange() : Color.green();
 }
 
 async function getData() {
@@ -138,24 +143,10 @@ function getBedsTrend(data, weekdata) {
     const prevData = getDataForDate(weekdata);
   
     if (prevData) {
-      bedsTrend = (data.overall.absolute.free < prevData.overall.absolute.free) ? '↓' : '↑';
+      bedsTrend = (data.absolute.free < prevData.absolute.free) ? '↓' : '↑';
     }
   }
   
-  return bedsTrend;
-}
-
-function getBedsStateTrend(data, weekdata) {
-  let bedsTrend = ' ';
-  
-  if (Object.keys(weekdata).length > 0) {
-    const prevData = getDataForDate(weekdata);
-    
-    if (prevData) {
-      bedsTrend = (data.state.absolute.free < prevData.state.absolute.free) ? '↓' : '↑';
-    }
-  }
-
   return bedsTrend;
 }
 
@@ -182,7 +173,7 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
 }
 
 function saveLoadData(newData, suffix = '') {
-  const updated = newData.overall.updated.substr(0, 10);
+  const updated = newData.updated.substr(0, 10);
   const loadedData = loadData(suffix);
 
   if (loadedData) {
@@ -214,7 +205,7 @@ function loadData(suffix) {
   return {};
 }
 
-function getFM(suffic) {
+function getFM(suffix) {
   let fm, path;
 
   try {
