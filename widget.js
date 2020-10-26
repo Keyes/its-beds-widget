@@ -32,7 +32,7 @@ async function createWidget(items) {
 
   if (data) {
     list.addSpacer();
-    
+
     const weekData = { 
       overall: saveLoadData(data.overall, 'DE'),
       state: saveLoadData(data.state, data.state.shortName),
@@ -50,7 +50,7 @@ async function createWidget(items) {
       
       if (CONFIG.layout === 'extended') {
         const location = bedsLabel.addText(data.state.shortName + ' ');
-        location.font = Font.mediumSystemFont(12);
+        location.font = Font.semiboldSystemFont(12);
         location.textColor = Color.lightGray();
 
         const label = bedsLabel.addText(`${data.state.absolute.free}/${data.state.absolute.total}`);
@@ -76,7 +76,7 @@ async function createWidget(items) {
     
     if (CONFIG.layout === 'extended') {
       const location = bedsLabel.addText('DE ');
-      location.font = Font.mediumSystemFont(12);
+      location.font = Font.semiboldSystemFont(12);
       location.textColor = Color.lightGray();
 
       const label = bedsLabel.addText(`${data.overall.absolute.free}/${data.overall.absolute.total}`);
@@ -95,7 +95,7 @@ async function createWidget(items) {
     dateFormatter.useShortTimeStyle();
 
     const updated = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
-    updated.font = Font.lightSystemFont(9);
+    updated.font = Font.regularSystemFont(9);
     updated.textColor = Color.gray();
   } else {
     list.addSpacer();
