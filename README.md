@@ -6,8 +6,8 @@ This is a widget for [Scriptable](https://scriptable.app). To use this widget, a
 
 ```
 // Licence: juliankern.com; CC BY 3.0 DE
-const cfg = { layout: 'simple' };
-(async () => new Function(await new Request('https://cdn.jsdelivr.net/gh/Keyes/its-beds-widget/widget.min.js').loadString())())();
+const C = { layout: 'simple' };
+(new Request('https://cdn.jsdelivr.net/gh/Keyes/its-beds-widget/widget.min.js').loadString().then(new Function)(C));
 ```
 
 This will load the current version, and keep it updated.
@@ -46,7 +46,7 @@ The following options are possible
 if you want to check out the development version of this widget, you can use this code: 
 ```
 // Licence: juliankern.com; CC BY 3.0 DE
-const cfg = { layout: 'simple' };
-(async () => new Function(await new Request('https://raw.githubusercontent.com/Keyes/its-beds-widget/dev/widget.js').loadString())())();
+const C = { layout: 'simple' };
+(new Request('https://raw.githubusercontent.com/Keyes/its-beds-widget/dev/widget.js').loadString().then(new Function)(C));
 ```
 **Beware** Please note that this version might not always work as expected!
