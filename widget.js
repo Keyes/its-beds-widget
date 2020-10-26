@@ -145,6 +145,10 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
     dateKey = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
   }
 
+  console.log('getDataForDate');
+  console.log(dateKey);
+  console.log(weekdata[dateKey]);
+
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
 
   return false;
