@@ -16,9 +16,7 @@ init();
 
 async function init() {
   const widget = await createWidget();
-  if (!config.runsInWidget) {
-    await widget.presentSmall();
-  }
+  if (!config.runsInWidget) await widget.presentSmall();
 
   Script.setWidget(widget);
   Script.complete();
@@ -40,53 +38,12 @@ async function createWidget(items) {
     if (data.state) {
       weekData.state = saveLoadData(data.state, data.state.shortName);
 
-      const label = list.addText(`${data.state.used.toFixed(2)}% ${getBedsTrend(data.state, weekData.state)}`);
-      label.font = Font.mediumSystemFont(22);
-      label.textColor = getPercentageColor(data.state.used);
-      
-      const bedsLabel = list.addStack();
-      bedsLabel.layoutHorizontally();
-      bedsLabel.centerAlignContent();
-      bedsLabel.useDefaultPadding();
-      
-      if (CONFIG.layout === 'extended') {
-        const location = bedsLabel.addText(data.state.shortName + ' ');
-        location.font = Font.semiboldSystemFont(12);
-        location.textColor = Color.lightGray();
-
-        const label = bedsLabel.addText(`${data.state.absolute.free}/${data.state.absolute.total}`);
-        label.font = Font.mediumSystemFont(12);
-        label.textColor = getPercentageColor(data.state.used);
-      } else {
-        const location = bedsLabel.addText(data.state.name);
-        location.font = Font.lightSystemFont(12);
-      }
+      renderDatablock(list, data.state, weekData.state);
       
       list.addSpacer(4);
     }
 
-    
-    const label = list.addText(`${data.overall.used.toFixed(2)}% ${getBedsTrend(data.overall, weekData.overall)}`);
-    label.font = Font.mediumSystemFont(22);
-    label.textColor = getPercentageColor(data.overall.used);
-    
-    const bedsLabel = list.addStack();
-    bedsLabel.layoutHorizontally();
-    bedsLabel.centerAlignContent();
-    bedsLabel.useDefaultPadding();
-    
-    if (CONFIG.layout === 'extended') {
-      const location = bedsLabel.addText('DE ');
-      location.font = Font.semiboldSystemFont(12);
-      location.textColor = Color.lightGray();
-
-      const label = bedsLabel.addText(`${data.overall.absolute.free}/${data.overall.absolute.total}`);
-      label.font = Font.mediumSystemFont(12);
-      label.textColor = getPercentageColor(data.overall.used);
-    } else {
-      const location = list.addText('Deutschland');
-      location.font = Font.lightSystemFont(12);
-    }
+    renderDatablock(list, data.overall, weekData.overall);
 
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
 
@@ -104,6 +61,30 @@ async function createWidget(items) {
   }
 
   return list;
+}
+
+function renderDatablock(list, data, weekData) {
+  const label = list.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
+  label.font = Font.mediumSystemFont(22);
+  label.textColor = getPercentageColor(data.used);
+
+  const bedsLabel = list.addStack();
+  bedsLabel.layoutHorizontally();
+  bedsLabel.centerAlignContent();
+  bedsLabel.useDefaultPadding();
+
+  if (CONFIG.layout === 'extended') {
+    const location = bedsLabel.addText((data.shortName || 'DE') + ' ');
+    location.font = Font.semiboldSystemFont(12);
+    location.textColor = Color.lightGray();
+
+    const label = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
+    label.font = Font.mediumSystemFont(12);
+    label.textColor = getPercentageColor(data.used);
+  } else {
+    const location = bedsLabel.addText(data.name || 'Deutschland');
+    location.font = Font.lightSystemFont(12);
+  }
 }
 
 function getPercentageColor(value) {
@@ -142,9 +123,7 @@ function getBedsTrend(data, weekdata) {
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
   
-    if (prevData) {
-      bedsTrend = (data.absolute.free < prevData.absolute.free) ? '↓' : '↑';
-    }
+    if (prevData) bedsTrend = (data.absolute.free < prevData.absolute.free) ? '↓' : '↑';
   }
   
   return bedsTrend;
@@ -156,18 +135,14 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   const today = new Date();
   const todayDateKey = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
 
-  if (typeof weekdata[todayDateKey] === 'undefined') {
-    dayOffset = 2;
-  }
+  if (typeof weekdata[todayDateKey] === 'undefined') dayOffset = 2;
 
   if (yesterday) {
     today.setDate(today.getDate() - dayOffset);
     dateKey = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
   }
 
-  if (typeof weekdata[dateKey] !== 'undefined') {
-    return weekdata[dateKey];
-  }
+  if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
 
   return false;
 }
