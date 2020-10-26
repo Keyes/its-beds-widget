@@ -42,10 +42,7 @@ async function createWidget(items) {
       
       list.addSpacer(4);
     }
-
-    console.log('get WeekData');
-    console.log(weekData);
-
+    
     renderDatablock(list, data.overall, weekData.overall);
 
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
@@ -76,21 +73,18 @@ function renderDatablock(list, data, weekData) {
   bedsLabel.centerAlignContent();
   bedsLabel.useDefaultPadding();
 
-  console.log('CONFIG.layout');
-  console.log(CONFIG.layout);
-
   if (CONFIG.layout === 'extended') {
     const location = bedsLabel.addText((data.shortName || 'DE') + ' ');
     location.font = Font.semiboldSystemFont(12);
     location.textColor = Color.lightGray();
 
-    const label = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
-    label.font = Font.mediumSystemFont(12);
-    label.textColor = getPercentageColor(data.used);
+    const absoluteLabel = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
+    absoluteLabel.font = Font.mediumSystemFont(12);
+    absoluteLabel.textColor = getPercentageColor(data.used);
 
-    const label = bedsLabel.addText(`(${getBedsTrendAbsolute(data, weekData)})`);
-    label.font = Font.lightSystemFont(12);
-    label.textColor = Color.lightGray();
+    const relativeLabel = bedsLabel.addText(`(${getBedsTrendAbsolute(data, weekData)})`);
+    relativeLabel.font = Font.lightSystemFont(12);
+    relativeLabel.textColor = Color.lightGray();
   } else {
     const location = bedsLabel.addText(data.name || 'Deutschland');
     location.font = Font.lightSystemFont(12);
