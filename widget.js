@@ -75,15 +75,15 @@ function renderDatablock(list, data, weekData) {
 
   if (CONFIG.layout === 'extended') {
     const location = bedsLabel.addText((data.shortName || 'DE') + ' ');
-    location.font = Font.semiboldSystemFont(11);
+    location.font = Font.semiboldSystemFont(10);
     location.textColor = Color.lightGray();
 
     const absoluteLabel = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
-    absoluteLabel.font = Font.mediumSystemFont(11);
+    absoluteLabel.font = Font.mediumSystemFont(10);
     absoluteLabel.textColor = getPercentageColor(data.used);
 
     const relativeLabel = bedsLabel.addText(getBedsTrendAbsolute(data, weekData));
-    relativeLabel.font = Font.mediumSystemFont(11);
+    relativeLabel.font = Font.mediumSystemFont(10);
     relativeLabel.textColor = Color.gray();
   } else {
     const location = bedsLabel.addText(data.name || 'Deutschland');
