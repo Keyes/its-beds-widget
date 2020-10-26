@@ -32,10 +32,13 @@ async function createWidget(items) {
 
   if (data) {
     list.addSpacer();
-    const weekData = saveLoadData(data, data.state.shortName)
+    
+    const weekData = { 
+      overall: saveLoadData(data.overall, 'DE'),
+      state: saveLoadData(data.state, data.state.shortName),
+    };
     
     if (data.state) {
-      
       const label = list.addText(`${data.state.used.toFixed(2)}% ${getBedsStateTrend(data, weekData)}`);
       label.font = Font.mediumSystemFont(22);
       label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
@@ -191,15 +194,8 @@ function saveLoadData(newData, suffix = '') {
     let loadedDataLimited = {};
     lastDaysKeys.forEach(key => loadedDataLimited[key] = loadedData[key]);
 
-    try {
-      let fm = FileManager.iCloud();
-      let path = getFilePath(fm, suffix);
-      fm.writeString(path, JSON.stringify(loadedDataLimited))
-    } catch (e) {
-      let fm = FileManager.local();
-      let path = getFilePath(fm, suffix);
-      fm.writeString(path, JSON.stringify(loadedDataLimited))
-    }
+    const { fm, path } = getFM(suffix);
+    fm.writeString(path, JSON.stringify(loadedDataLimited))
 
     return loadedData;
   }
@@ -208,22 +204,11 @@ function saveLoadData(newData, suffix = '') {
 }
 
 function loadData(suffix) {
-  try {
-    const fm = FileManager.iCloud();
-    const path = getFilePath(fm, suffix);
-  
-    if (fm.fileExists(path)) {
-      const data = fm.readString(path);
-      return JSON.parse(data);
-    }
-  } catch (e) {
-    const fm = FileManager.local();
-    const path = getFilePath(fm, suffix);
-  
-    if (fm.fileExists(path)) {
-      const data = fm.readString(path);
-      return JSON.parse(data);
-    }
+  const { fm, path } = getFM(suffix);
+
+  if (fm.fileExists(path)) {
+    const data = fm.readString(path);
+    return JSON.parse(data);
   }
 
   return {};
@@ -231,4 +216,18 @@ function loadData(suffix) {
 
 function getFilePath(fm, suffix) {
   return fm.joinPath(fm.documentsDirectory(), `its-beds-${suffix}.json`)
+}
+
+function getFM(suffic) {
+  let fm, path;
+
+  try {
+    fm = FileManager.iCloud();
+    path = getFilePath(fm, suffix);
+  } catch (e) {
+    fm = FileManager.local();
+    path = getFilePath(fm, suffix);
+  }
+
+  return { fm, path };
 }
