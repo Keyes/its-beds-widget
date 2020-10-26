@@ -34,6 +34,7 @@ async function createWidget(items) {
 
   if (data) {
     list.addSpacer();
+    const weekData = saveLoadData(data, data.state.shortName)
     
     if (data.state) {
       
@@ -48,10 +49,10 @@ async function createWidget(items) {
       
       if (CONFIG.layout === 'extended') {
         const location = bedsLabel.addText(data.state.shortName + ' ');
-        location.font = Font.thinSystemFont(12);
-        location.textColor = Color.gray();
+        location.font = Font.mediumSystemFont(12);
+        location.textColor = Color.lightGray();
 
-        const label = bedsLabel.addText(`${data.state.absolute.free}/${data.state.absolute.total}`);
+        const label = bedsLabel.addText(`${data.state.absolute.free}/${data.state.absolute.total} ${getBedsStateTrend(data, weekData)}`);
         label.font = Font.mediumSystemFont(12);
         label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
       } else {
@@ -74,10 +75,10 @@ async function createWidget(items) {
     
     if (CONFIG.layout === 'extended') {
       const location = bedsLabel.addText('DE ');
-      location.font = Font.thinSystemFont(12);
-      location.textColor = Color.gray();
+      location.font = Font.mediumSystemFont(12);
+      location.textColor = Color.lightGray();
 
-      const label = bedsLabel.addText(`${data.overall.absolute.free}/${data.overall.absolute.total}`);
+      const label = bedsLabel.addText(`${data.overall.absolute.free}/${data.overall.absolute.total} ${getBedsTrend(data, weekData)}`);
       label.font = Font.mediumSystemFont(12);
       label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
     } else {
@@ -94,7 +95,7 @@ async function createWidget(items) {
 
     const updated = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
     updated.font = Font.lightSystemFont(9);
-    updated.textColor = Color.lightGray();
+    updated.textColor = Color.gray();
   } else {
     list.addSpacer();
     list.addText("Daten nicht verfügbar");
@@ -127,4 +128,113 @@ async function getLocation() {
   } catch (e) {
     return null;
   }
+}
+
+function getBedsTrend(data, weekdata) {
+  let bedsTrend = ' ';
+  
+  if (Object.keys(weekdata).length > 0) {
+    const prevData = getDataForDate(weekdata);
+  
+    if (prevData) {
+      bedsTrend = (data.overall.absolute.free < prevData.overall.absolute.free) ? '↓' : '↑';
+    }
+  }
+  
+  return bedsTrend;
+}
+
+function getBedsStateTrend(data, weekdata) {
+  let bedsTrend = ' ';
+  
+  if (Object.keys(weekdata).length > 0) {
+    const prevData = getDataForDate(weekdata);
+    
+    if (prevData) {
+      bedsTrend = (data.state.absolute.free < prevData.state.absolute.free) ? '↓' : '↑';
+    }
+  }
+
+  return bedsTrend;
+}
+
+function getDataForDate(weekdata, yesterday = true, datestr = '') {
+  let dateKey = datestr;
+  let dayOffset = 1;
+  const today = new Date();
+  const todayDateKey = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+
+  if (typeof weekdata[todayDateKey] === 'undefined') {
+    dayOffset = 2;
+  }
+
+  if (yesterday) {
+    today.setDate(today.getDate() - dayOffset);
+    dateKey = `${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
+  }
+
+  if (typeof weekdata[dateKey] !== 'undefined') {
+    return weekdata[dateKey];
+  }
+
+  return false;
+}
+
+function saveLoadData(newData, suffix = '') {
+  const updated = newData.updated.substr(0, 10);
+  const loadedData = loadData(suffix);
+
+  if (loadedData) {
+    loadedData[updated] = newData;
+
+    const loadedDataKeys = Object.keys(loadedData);
+    const lastDaysKeys = loadedDataKeys.slice(Math.max(Object.keys(loadedData).length - 7, 0));
+
+    let loadedDataLimited = {};
+    lastDaysKeys.forEach(key => loadedDataLimited[key] = loadedData[key]);
+
+    try {
+      let fm = FileManager.iCloud();
+      let path = getFilePath(fm, suffix);
+      fm.writeString(path, JSON.stringify(loadedDataLimited))
+      console.log('iCloud: save');
+    } catch (e) {
+      let fm = FileManager.local();
+      let path = getFilePath(fm, suffix);
+      fm.writeString(path, JSON.stringify(loadedDataLimited))
+      console.log('Local: save');
+    }
+
+    return loadedData;
+  }
+
+  return {};
+}
+
+function loadData(suffix) {
+  try {
+    const fm = FileManager.iCloud();
+    const path = getFilePath(fm, suffix);
+  
+    if (fm.fileExists(path)) {
+      const data = fm.readString(path);
+      console.log('iCloud: read');
+      return JSON.parse(data);
+    }
+  } catch (e) {
+    const fm = FileManager.local();
+    const path = getFilePath(fm, suffix);
+  
+    if (fm.fileExists(path)) {
+      const data = fm.readString(path);
+      console.log('Local: read');
+      return JSON.parse(data);
+    }
+  }
+
+  return {};
+}
+
+function getFilePath(fm, suffix) {
+  return fm.joinPath(fm.documentsDirectory(), `its-beds-${suffix}.json`)
 }
