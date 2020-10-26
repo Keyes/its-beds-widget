@@ -87,6 +87,10 @@ function renderDatablock(list, data, weekData) {
     const label = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
     label.font = Font.mediumSystemFont(12);
     label.textColor = getPercentageColor(data.used);
+
+    const label = bedsLabel.addText(`(${getBedsTrendAbsolute(data, weekData)})`);
+    label.font = Font.lightSystemFont(12);
+    label.textColor = Color.lightGray();
   } else {
     const location = bedsLabel.addText(data.name || 'Deutschland');
     location.font = Font.lightSystemFont(12);
@@ -132,6 +136,21 @@ function getBedsTrend(data, weekdata) {
     if (prevData) bedsTrend = (data.absolute.free < prevData.absolute.free) ? '↓' : '↑';
   }
   
+  return bedsTrend;
+}
+
+function getBedsTrendAbsolute(data, weekdata) {
+  let bedsTrend = '';
+  
+  if (Object.keys(weekdata).length > 0) {
+    const prevData = getDataForDate(weekdata);
+
+    if (prevData) {
+      const bedsTrend = (data.absolute.free - prevData.absolute.free);
+      if (bedsTrend > 0) bedsTrend = `+${bedsTrend}`;
+    }
+  }
+
   return bedsTrend;
 }
 
