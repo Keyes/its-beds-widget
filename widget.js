@@ -76,6 +76,9 @@ function renderDatablock(list, data, weekData) {
   bedsLabel.centerAlignContent();
   bedsLabel.useDefaultPadding();
 
+  console.log('CONFIG.layout');
+  console.log(CONFIG.layout);
+
   if (CONFIG.layout === 'extended') {
     const location = bedsLabel.addText((data.shortName || 'DE') + ' ');
     location.font = Font.semiboldSystemFont(12);
@@ -137,13 +140,6 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   let dayOffset = 1;
   const today = new Date();
   const todayDateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
-  
-  console.log('getDataForDate');
-  console.log(weekdata);
-
-  console.log('----');
-  console.log(todayDateKey);
-  console.log(weekdata[todayDateKey]);
 
   if (typeof weekdata[todayDateKey] === 'undefined') dayOffset = 2;
 
@@ -151,10 +147,6 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
     today.setDate(today.getDate() - dayOffset);
     dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
   }
-
-  console.log('----');
-  console.log(dateKey);
-  console.log(weekdata[dateKey]);
 
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
 
