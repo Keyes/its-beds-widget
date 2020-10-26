@@ -20,8 +20,6 @@ async function init() {
     await widget.presentSmall();
   }
 
-  console.log(CONFIG.layout);
-
   Script.setWidget(widget);
   Script.complete();
 }
@@ -197,12 +195,10 @@ function saveLoadData(newData, suffix = '') {
       let fm = FileManager.iCloud();
       let path = getFilePath(fm, suffix);
       fm.writeString(path, JSON.stringify(loadedDataLimited))
-      console.log('iCloud: save');
     } catch (e) {
       let fm = FileManager.local();
       let path = getFilePath(fm, suffix);
       fm.writeString(path, JSON.stringify(loadedDataLimited))
-      console.log('Local: save');
     }
 
     return loadedData;
@@ -218,7 +214,6 @@ function loadData(suffix) {
   
     if (fm.fileExists(path)) {
       const data = fm.readString(path);
-      console.log('iCloud: read');
       return JSON.parse(data);
     }
   } catch (e) {
@@ -227,7 +222,6 @@ function loadData(suffix) {
   
     if (fm.fileExists(path)) {
       const data = fm.readString(path);
-      console.log('Local: read');
       return JSON.parse(data);
     }
   }
