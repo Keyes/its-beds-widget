@@ -21,7 +21,9 @@ This will load the current version, and keep it updated.
 - Shows the **timestamp** of the last update - official updates happen usually once per hour 
 - Multiple **layouts** (see config)
 - Shows trend arrows how the free beds changed compared to yesterday
+    - trend data is stored locally on your device or in your iCloud
     - additionally shows relative mount of beds added/removed in extended layout
+    - trend arrows/numbers appear after the first day of usage
 
 ### Config
 The following options are possible
