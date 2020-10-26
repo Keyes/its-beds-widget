@@ -83,8 +83,8 @@ function renderDatablock(list, data, weekData) {
     absoluteLabel.textColor = getPercentageColor(data.used);
 
     const relativeLabel = bedsLabel.addText(getBedsTrendAbsolute(data, weekData));
-    relativeLabel.font = Font.regularSystemFont(11);
-    relativeLabel.textColor = Color.lightGray();
+    relativeLabel.font = Font.mediumSystemFont(11);
+    relativeLabel.textColor = Color.gray();
   } else {
     const location = bedsLabel.addText(data.name || 'Deutschland');
     location.font = Font.lightSystemFont(12);
@@ -141,7 +141,7 @@ function getBedsTrendAbsolute(data, weekdata) {
       const bedsTrend = (data.absolute.free - prevData.absolute.free);
       if (bedsTrend > 0) bedsTrend = `+${bedsTrend}`;
 
-      return `(${bedsTrend})`;
+      return ` (${bedsTrend})`;
     }
   }
 
