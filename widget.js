@@ -43,7 +43,8 @@ async function createWidget(items) {
       list.addSpacer(4);
     }
 
-    console.log('get WeekData', weekData);
+    console.log('get WeekData');
+    console.log(weekData);
 
     renderDatablock(list, data.overall, weekData.overall);
 
