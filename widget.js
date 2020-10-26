@@ -43,6 +43,8 @@ async function createWidget(items) {
       list.addSpacer(4);
     }
 
+    console.log('get WeekData', weekData);
+
     renderDatablock(list, data.overall, weekData.overall);
 
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
