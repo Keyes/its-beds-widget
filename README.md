@@ -1,6 +1,7 @@
 # its-beds-widget
 
 ![Screenshot](screenshot.jpg "Screenshot")
+![Extended Screenshot](screenshot.jpg "Extended Screenshot")
 
 This is a widget for [Scriptable](https://scriptable.app). To use this widget, add a new script to Scriptable, and insert this code:
 
@@ -21,8 +22,8 @@ This will load the current version, and keep it updated.
 ### Config
 The following options are possible
 - layout
-    - 'simple': default layout (default option)
-    - 'extended': shows additionally absolute numbers of beds
+    - 'simple': default layout (default option, see first screenshot)
+    - 'extended': shows additionally absolute numbers of beds (see second screenshot)
 
 ### List of state short codes
 - Baden-Württemberg: BW
