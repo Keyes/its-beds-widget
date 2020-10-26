@@ -214,10 +214,6 @@ function loadData(suffix) {
   return {};
 }
 
-function getFilePath(fm, suffix) {
-  return fm.joinPath(fm.documentsDirectory(), `its-beds-${suffix}.json`)
-}
-
 function getFM(suffic) {
   let fm, path;
 
@@ -230,4 +226,8 @@ function getFM(suffic) {
   }
 
   return { fm, path };
+}
+
+function getFilePath(fm, suffix) {
+  return fm.joinPath(fm.documentsDirectory(), `its-beds-${suffix}.json`)
 }
