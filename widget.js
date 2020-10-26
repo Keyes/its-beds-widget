@@ -42,7 +42,7 @@ async function createWidget(items) {
       
       list.addSpacer(4);
     }
-    
+
     renderDatablock(list, data.overall, weekData.overall);
 
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
@@ -82,7 +82,7 @@ function renderDatablock(list, data, weekData) {
     absoluteLabel.font = Font.mediumSystemFont(12);
     absoluteLabel.textColor = getPercentageColor(data.used);
 
-    const relativeLabel = bedsLabel.addText(`(${getBedsTrendAbsolute(data, weekData)})`);
+    const relativeLabel = bedsLabel.addText(getBedsTrendAbsolute(data, weekData));
     relativeLabel.font = Font.lightSystemFont(12);
     relativeLabel.textColor = Color.lightGray();
   } else {
@@ -134,18 +134,18 @@ function getBedsTrend(data, weekdata) {
 }
 
 function getBedsTrendAbsolute(data, weekdata) {
-  let bedsTrend = '';
-  
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
 
     if (prevData) {
       const bedsTrend = (data.absolute.free - prevData.absolute.free);
       if (bedsTrend > 0) bedsTrend = `+${bedsTrend}`;
+
+      return `(${bedsTrend})`;
     }
   }
 
-  return bedsTrend;
+  return '';
 }
 
 function getDataForDate(weekdata, yesterday = true, datestr = '') {
