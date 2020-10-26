@@ -38,7 +38,7 @@ async function createWidget(items) {
     
     if (data.state) {
       
-      const label = list.addText(data.state.used.toFixed(2) + "%");
+      const label = list.addText(`${data.state.used.toFixed(2)}% ${getBedsStateTrend(data, weekData)}`);
       label.font = Font.mediumSystemFont(22);
       label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
       
@@ -52,7 +52,7 @@ async function createWidget(items) {
         location.font = Font.mediumSystemFont(12);
         location.textColor = Color.lightGray();
 
-        const label = bedsLabel.addText(`${data.state.absolute.free}/${data.state.absolute.total} ${getBedsStateTrend(data, weekData)}`);
+        const label = bedsLabel.addText(`${data.state.absolute.free}/${data.state.absolute.total}`);
         label.font = Font.mediumSystemFont(12);
         label.textColor = data.state.used <= 25 ? Color.red() : data.state.used <= 50 ? Color.orange() : Color.green();
       } else {
@@ -64,7 +64,7 @@ async function createWidget(items) {
     }
 
     
-    const label = list.addText(data.overall.used.toFixed(2) + "%");
+    const label = list.addText(`${data.overall.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
     label.font = Font.mediumSystemFont(22);
     label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
     
@@ -78,7 +78,7 @@ async function createWidget(items) {
       location.font = Font.mediumSystemFont(12);
       location.textColor = Color.lightGray();
 
-      const label = bedsLabel.addText(`${data.overall.absolute.free}/${data.overall.absolute.total} ${getBedsTrend(data, weekData)}`);
+      const label = bedsLabel.addText(`${data.overall.absolute.free}/${data.overall.absolute.total}`);
       label.font = Font.mediumSystemFont(12);
       label.textColor = data.overall.used <= 25 ? Color.red() : data.overall.used <= 50 ? Color.orange() : Color.green();
     } else {
