@@ -1,7 +1,7 @@
 # its-beds-widget
 
 ![Screenshot](screenshot.jpg "Screenshot")
-![Extended Screenshot](screenshot.jpg "Extended Screenshot")
+![Extended Screenshot](screenshot_extended.jpg "Extended Screenshot")
 
 This is a widget for [Scriptable](https://scriptable.app). To use this widget, add a new script to Scriptable, and insert this code:
 
