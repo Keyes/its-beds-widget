@@ -181,7 +181,7 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
 }
 
 function saveLoadData(newData, suffix = '') {
-  const updated = newData.updated.substr(0, 10);
+  const updated = newData.overall.updated.substr(0, 10);
   const loadedData = loadData(suffix);
 
   if (loadedData) {
