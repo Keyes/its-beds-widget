@@ -1,5 +1,5 @@
 /* Licence: juliankern.com; CC BY 3.0 DE */
-const apiUrlBase = 'http://intensiv-widget.juliankern.com/beds';
+const apiUrlBase = 'https://intensiv-widget.juliankern.com/beds';
 const getApiUrl = (location, state) => {
   if (location) { return `${apiUrlBase}?lat=${location.latitude.toFixed(3)}&lng=${location.longitude.toFixed(3)}`; }
   if (state) { return `${apiUrlBase}?state=${state}`; }
