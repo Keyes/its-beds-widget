@@ -7,8 +7,6 @@ name: CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -24,6 +22,8 @@ jobs:
 
       - name: Auto Minify
         uses: nizarmah/auto-minify@master
+        with:
+          js_engine: uglify-js
 
       # Auto commits minified files to the repository
       # Ignore it if you don't want to commit the files to the repository 
