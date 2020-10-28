@@ -82,11 +82,11 @@ async function createWidget(items) {
     updated.setPadding(0, 0, 0, 0);
 
     const updatedIcon = SFSymbol.named('arrow.clockwise');
-    updatedIcon.applyFont(Font.regularSystemFont(8));
+    updatedIcon.applyFont(Font.regularSystemFont(7));
 
     const updatedIconImage = updated.addImage(updatedIcon.image);
     updatedIconImage.tintColor = Color.gray();
-    updatedIconImage.imageSize = new Size(8,8);
+    updatedIconImage.imageSize = new Size(7, 7);
     updatedIconImage.resizeable = false;
 
     // const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
