@@ -71,11 +71,11 @@ async function createWidget(items) {
     updated.useDefaultPadding();
 
     const updatedIcon = SFSymbol.named('arrow.clockwise');
-    updatedIcon.applyFont(Font.regularSystemFont(9));
+    updatedIcon.applyFont(Font.regularSystemFont(8));
 
     const updatedIconImage = updated.addImage(updatedIcon.image);
-    updatedIconImage.tintColor = getPercentageColor(data.used);
-    updatedIconImage.imageSize = new Size(9, 9);
+    updatedIconImage.tintColor = Color.gray();
+    updatedIconImage.imageSize = new Size(8,8);
     updatedIconImage.resizeable = false;
 
     // const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
@@ -102,11 +102,11 @@ function renderDatablock(list, data, weekData) {
   label.textColor = getPercentageColor(data.used);
 
   const trendIcon = SFSymbol.named(getBedsTrendIcon(data, weekData));
-  trendIcon.applyFont(Font.mediumSystemFont(20));
+  trendIcon.applyFont(Font.mediumSystemFont(15));
 
   const trendIconImage = percentLabel.addImage(trendIcon.image);
   trendIconImage.tintColor = getPercentageColor(data.used);
-  trendIconImage.imageSize = new Size(20, 20);
+  trendIconImage.imageSize = new Size(15, 15);
   trendIconImage.resizeable = false;
 
   const bedsLabel = list.addStack();
