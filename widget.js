@@ -34,7 +34,7 @@ async function createWidget(items) {
   const header = list.addStack();
   header.layoutHorizontally();
   header.centerAlignContent();
-  // header.useDefaultPadding();
+  header.setPadding(0, 0, 0, 0);
 
   const widgetIcon = SFSymbol.named('bed.double');
   widgetIcon.applyFont(Font.mediumSystemFont(12));
@@ -79,7 +79,7 @@ async function createWidget(items) {
     const updated = list.addStack();
     updated.layoutHorizontally();
     updated.centerAlignContent();
-    // updated.useDefaultPadding();
+    updated.setPadding(0, 0, 0, 0);
 
     const updatedIcon = SFSymbol.named('arrow.clockwise');
     updatedIcon.applyFont(Font.regularSystemFont(8));
@@ -105,7 +105,7 @@ function renderDatablock(list, data, weekData) {
   const percentLabel = list.addStack();
   percentLabel.layoutHorizontally();
   percentLabel.centerAlignContent();
-  // percentLabel.useDefaultPadding();
+  percentLabel.setPadding(0, 0, 0, 0);
 
   // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
   const label = percentLabel.addText(`${data.used.toFixed(2)}% `);
@@ -123,7 +123,7 @@ function renderDatablock(list, data, weekData) {
   const bedsLabel = list.addStack();
   bedsLabel.layoutHorizontally();
   bedsLabel.centerAlignContent();
-  // bedsLabel.useDefaultPadding();
+  bedsLabel.setPadding(0, 0, 0, 0);
 
   if (CONFIG.layout === 'extended') {
     if (CONFIG.debug) console.log('render extended datablock');
