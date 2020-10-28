@@ -127,7 +127,7 @@ function getBedsTrend(data, weekdata) {
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
   
-    if (prevData) bedsTrend = (data.absolute.free < prevData.absolute.free) ? '↓' : '↑';
+    if (prevData) bedsTrend = (data.absolute.free === prevData.absolute.free) ? ' ' : ((data.absolute.free < prevData.absolute.free) ? '↓' : '↑');
   }
   
   return bedsTrend;
@@ -139,6 +139,7 @@ function getBedsTrendAbsolute(data, weekdata) {
 
     if (prevData) {
       const bedsTrend = (data.absolute.free - prevData.absolute.free);
+      if (bedsTrend === 0) return '';
       if (bedsTrend > 0) bedsTrend = `+${bedsTrend}`;
 
       return ` (${bedsTrend})`;
