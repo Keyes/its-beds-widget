@@ -32,7 +32,7 @@ async function createWidget(items) {
   header.useDefaultPadding();
 
   const widgetIcon = SFSymbol.named('bed.double');
-  widgetIcon.applyFont(Font.mediumSystemFont(12));
+  widgetIcon.applyFont(Font.mediumSystemFont(10));
   const widgetIconImage = header.addImage(widgetIcon.image);
   widgetIconImage.tintColor = Color.white();
 
