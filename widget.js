@@ -35,10 +35,10 @@ async function createWidget(items) {
   widgetIcon.applyFont(Font.mediumSystemFont(12));
   const widgetIconImage = header.addImage(widgetIcon.image);
   widgetIconImage.tintColor = Color.white();
-  widgetIconImage.imageSize = new Size(12, 12);
+  widgetIconImage.imageSize = new Size(13, 13);
   widgetIconImage.resizeable = false;
 
-  const headerText = header.addText(" Freie ITS-Betten");
+  const headerText = header.addText("  Freie ITS-Betten");
   headerText.font = Font.mediumSystemFont(12);
 
   if (data) {
@@ -77,9 +77,23 @@ async function createWidget(items) {
 }
 
 function renderDatablock(list, data, weekData) {
-  const label = list.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
+  const percentLabel = list.addStack();
+  percentLabel.layoutHorizontally();
+  percentLabel.centerAlignContent();
+  percentLabel.useDefaultPadding();
+
+  // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
+  const label = percentLabel.addText(`${data.used.toFixed(2)}% `);
   label.font = Font.mediumSystemFont(22);
   label.textColor = getPercentageColor(data.used);
+
+  const trendIcon = SFSymbol.named(getBedsTrendIcon(data, weekData));
+  trendIcon.applyFont(Font.mediumSystemFont(22));
+
+  const trendIconImage = percentLabel.addImage(trendIcon.image);
+  trendIconImage.tintColor = Color.white();
+  trendIconImage.imageSize = new Size(24, 24);
+  trendIconImage.resizeable = false;
 
   const bedsLabel = list.addStack();
   bedsLabel.layoutHorizontally();
@@ -144,6 +158,18 @@ function getBedsTrend(data, weekdata) {
   }
   
   return bedsTrend;
+}
+
+function getBedsTrendIcon(data, weekdata) {
+  if (Object.keys(weekdata).length > 0) {
+    const prevData = getDataForDate(weekdata);
+
+    if (prevData) {
+      if (data.absolute.free === prevData.absolute.free) return;
+      if (data.absolute.free < prevData.absolute.free) return 'arrow.down.right';
+      else return 'arrow.up.right';
+    }
+  }
 }
 
 function getBedsTrendAbsolute(data, weekdata) {
