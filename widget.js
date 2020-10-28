@@ -84,7 +84,6 @@ async function createWidget(items) {
     updated.setPadding(1,1,1,1);
     updated.spacing = 2;
 
-
     const updatedIcon = SFSymbol.named('arrow.clockwise');
     updatedIcon.applyFont(Font.regularSystemFont(7));
 
@@ -118,7 +117,7 @@ function renderDatablock(list, data, weekData) {
   label.textColor = getPercentageColor(data.used);
 
   const trendIcon = SFSymbol.named(getBedsTrendIcon(data, weekData));
-  trendIcon.applyFont(Font.mediumSystemFont(15));
+  trendIcon.applyFont(Font.regularSystemFont(15));
 
   const trendIconImage = percentLabel.addImage(trendIcon.image);
   trendIconImage.tintColor = getPercentageColor(data.used);
