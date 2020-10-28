@@ -15,6 +15,7 @@ const CONFIG = Object.assign({}, defaultCfg, arguments[0]);
 init();
 
 async function init() {
+  if (CONFIG.debug) console.log('init called');
   const widget = await createWidget();
   if (!config.runsInWidget) await widget.presentSmall();
 
@@ -23,8 +24,12 @@ async function init() {
 }
 
 async function createWidget(items) {
+  if (CONFIG.debug) console.log('createWidget called');
+
   const data = await getData();
   const list = new ListWidget();
+
+  if (CONFIG.debug) console.log('data received');
 
   const header = list.addStack();
   header.layoutHorizontally();
@@ -41,6 +46,8 @@ async function createWidget(items) {
   const headerText = header.addText("  Freie ITS-Betten");
   headerText.font = Font.mediumSystemFont(12);
 
+  if (CONFIG.debug) console.log('base constructed');
+
   if (data) {
     list.addSpacer();
 
@@ -51,10 +58,14 @@ async function createWidget(items) {
     if (data.state) {
       weekData.state = saveLoadData(data.state, data.state.shortName);
 
+      if (CONFIG.debug) console.log('render state datablock');
+
       renderDatablock(list, data.state, weekData.state);
       
       list.addSpacer(4);
     }
+
+    if (CONFIG.debug) console.log('render overall datablock');
 
     renderDatablock(list, data.overall, weekData.overall);
 
@@ -115,6 +126,8 @@ function renderDatablock(list, data, weekData) {
   bedsLabel.useDefaultPadding();
 
   if (CONFIG.layout === 'extended') {
+    if (CONFIG.debug) console.log('render extended datablock');
+
     const location = bedsLabel.addText((data.shortName || 'DE') + ' ');
     location.font = Font.semiboldSystemFont(10);
     location.textColor = Color.lightGray();
@@ -127,6 +140,8 @@ function renderDatablock(list, data, weekData) {
     relativeLabel.font = Font.mediumSystemFont(10);
     relativeLabel.textColor = Color.gray();
   } else {
+    if (CONFIG.debug) console.log('render simple datablock');
+
     const location = bedsLabel.addText(data.name || 'Deutschland');
     location.font = Font.lightSystemFont(12);
   }
@@ -138,6 +153,8 @@ function getPercentageColor(value) {
 
 async function getData() {
   try {
+    if (CONFIG.debug) console.log('try getting data');
+
     let foundData;
     
     if (args.widgetParameter) {
@@ -149,15 +166,27 @@ async function getData() {
 
     return foundData;
   } catch (e) {
+    if (CONFIG.debug) { 
+      console.log('error getting data');
+      console.log(e);
+    }
+
     return null;
   }
 }
 
 async function getLocation() {
   try {
+    if (CONFIG.debug) console.log('try getting location');
+
     Location.setAccuracyToThreeKilometers();
     return await Location.current();
   } catch (e) {
+    if (CONFIG.debug) {
+      console.log('error getting location');
+      console.log(e);
+    }
+    
     return null;
   }
 }
