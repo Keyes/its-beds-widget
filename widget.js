@@ -35,15 +35,17 @@ async function createWidget(items) {
   header.layoutHorizontally();
   header.centerAlignContent();
   header.setPadding(0, 0, 0, 0);
+  header.spacing = 4;
 
   const widgetIcon = SFSymbol.named('bed.double');
   widgetIcon.applyFont(Font.mediumSystemFont(12));
+
   const widgetIconImage = header.addImage(widgetIcon.image);
   widgetIconImage.tintColor = Color.white();
   widgetIconImage.imageSize = new Size(13, 13);
   widgetIconImage.resizeable = false;
 
-  const headerText = header.addText("  Freie ITS-Betten");
+  const headerText = header.addText('Freie ITS-Betten');
   headerText.font = Font.mediumSystemFont(12);
 
   if (CONFIG.debug) console.log('base constructed');
@@ -80,6 +82,8 @@ async function createWidget(items) {
     updated.layoutHorizontally();
     updated.centerAlignContent();
     updated.setPadding(0, 0, 0, 0);
+    updated.spacing = 2;
+
 
     const updatedIcon = SFSymbol.named('arrow.clockwise');
     updatedIcon.applyFont(Font.regularSystemFont(7));
@@ -90,7 +94,7 @@ async function createWidget(items) {
     updatedIconImage.resizeable = false;
 
     // const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
-    const updatedLabel = updated.addText(` ${dateFormatter.string(new Date(data.overall.updated))}`);
+    const updatedLabel = updated.addText(`${dateFormatter.string(new Date(data.overall.updated))}`);
     updatedLabel.font = Font.regularSystemFont(9);
     updatedLabel.textColor = Color.gray();
   } else {
@@ -106,9 +110,10 @@ function renderDatablock(list, data, weekData) {
   percentLabel.layoutHorizontally();
   percentLabel.centerAlignContent();
   percentLabel.setPadding(0, 0, 0, 0);
+  percentLabel.spacing = 4;
 
   // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
-  const label = percentLabel.addText(`${data.used.toFixed(2)}% `);
+  const label = percentLabel.addText(`${data.used.toFixed(2)}%`);
   label.font = Font.mediumSystemFont(22);
   label.textColor = getPercentageColor(data.used);
 
@@ -124,11 +129,13 @@ function renderDatablock(list, data, weekData) {
   bedsLabel.layoutHorizontally();
   bedsLabel.centerAlignContent();
   bedsLabel.setPadding(0, 0, 0, 0);
+  bedsLabel.spacing = 2;
+
 
   if (CONFIG.layout === 'extended') {
     if (CONFIG.debug) console.log('render extended datablock');
 
-    const location = bedsLabel.addText((data.shortName || 'DE') + ' ');
+    const location = bedsLabel.addText((data.shortName || 'DE'));
     location.font = Font.semiboldSystemFont(10);
     location.textColor = Color.lightGray();
 
