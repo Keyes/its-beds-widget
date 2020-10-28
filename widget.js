@@ -28,14 +28,14 @@ async function createWidget(items) {
 
   const data = await getData();
   const list = new ListWidget();
-  list.setPadding(0,0,0,0);
+  list.setPadding(10,0,10,0);
 
   if (CONFIG.debug) console.log('data received');
 
   const header = list.addStack();
   header.layoutHorizontally();
   header.centerAlignContent();
-  // header.setPadding(0,-2,0,0);
+  header.setPadding(0,0,0,0);
   header.spacing = 4;
 
   const widgetIcon = SFSymbol.named('bed.double');
@@ -82,7 +82,7 @@ async function createWidget(items) {
     const updated = list.addStack();
     updated.layoutHorizontally();
     updated.centerAlignContent();
-    // updated.setPadding(0,-2,0,0);
+    updated.setPadding(0,0,0,0);
     updated.spacing = 2;
 
     const updatedIcon = SFSymbol.named('arrow.clockwise');
@@ -109,7 +109,7 @@ function renderDatablock(list, data, weekData) {
   const percentLabel = list.addStack();
   percentLabel.layoutHorizontally();
   percentLabel.centerAlignContent();
-  // percentLabel.setPadding(0,-2,0,0);
+  percentLabel.setPadding(0,0,0,0);
   percentLabel.spacing = 4;
 
   // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
@@ -128,7 +128,7 @@ function renderDatablock(list, data, weekData) {
   const bedsLabel = list.addStack();
   bedsLabel.layoutHorizontally();
   bedsLabel.centerAlignContent();
-  // bedsLabel.setPadding(0,-2,0,0);
+  bedsLabel.setPadding(0,0,0,0);
   bedsLabel.spacing = 2;
 
 
