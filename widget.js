@@ -34,7 +34,7 @@ async function createWidget(items) {
   const header = list.addStack();
   header.layoutHorizontally();
   header.centerAlignContent();
-  header.setPadding(1,1,1,1);
+  header.setPadding(0,-2,0,0);
   header.spacing = 4;
 
   const widgetIcon = SFSymbol.named('bed.double');
@@ -81,7 +81,7 @@ async function createWidget(items) {
     const updated = list.addStack();
     updated.layoutHorizontally();
     updated.centerAlignContent();
-    updated.setPadding(1,1,1,1);
+    updated.setPadding(0,-2,0,0);
     updated.spacing = 2;
 
     const updatedIcon = SFSymbol.named('arrow.clockwise');
@@ -108,7 +108,7 @@ function renderDatablock(list, data, weekData) {
   const percentLabel = list.addStack();
   percentLabel.layoutHorizontally();
   percentLabel.centerAlignContent();
-  percentLabel.setPadding(1,1,1,1);
+  percentLabel.setPadding(0,-2,0,0);
   percentLabel.spacing = 4;
 
   // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
@@ -121,13 +121,13 @@ function renderDatablock(list, data, weekData) {
 
   const trendIconImage = percentLabel.addImage(trendIcon.image);
   trendIconImage.tintColor = getPercentageColor(data.used);
-  trendIconImage.imageSize = new Size(15, 15);
+  trendIconImage.imageSize = new Size(12, 15);
   trendIconImage.resizeable = false;
 
   const bedsLabel = list.addStack();
   bedsLabel.layoutHorizontally();
   bedsLabel.centerAlignContent();
-  bedsLabel.setPadding(1,1,1,1);
+  bedsLabel.setPadding(0,-2,0,0);
   bedsLabel.spacing = 2;
 
 
