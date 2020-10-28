@@ -25,8 +25,18 @@ async function init() {
 async function createWidget(items) {
   const data = await getData();
   const list = new ListWidget();
-  const header = list.addText("🛏 Freie ITS-Betten");
-  header.font = Font.mediumSystemFont(12);
+
+  const header = list.addStack();
+  header.layoutHorizontally();
+  header.centerAlignContent();
+  header.useDefaultPadding();
+
+  const widgetIcon = SFSymbol.named('bed.double');
+  widgetIcon.applyFont(Font.mediumSystemFont(12));
+  header.addImage(widgetIcon.image);
+
+  const headerText = header.addText("Freie ITS-Betten");
+  headerText.font = Font.mediumSystemFont(12);
 
   if (data) {
     list.addSpacer();
