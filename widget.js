@@ -91,8 +91,8 @@ function renderDatablock(list, data, weekData) {
   trendIcon.applyFont(Font.mediumSystemFont(22));
 
   const trendIconImage = percentLabel.addImage(trendIcon.image);
-  trendIconImage.tintColor = Color.white();
-  trendIconImage.imageSize = new Size(24, 24);
+  trendIconImage.tintColor = getPercentageColor(data.used);
+  trendIconImage.imageSize = new Size(20, 20);
   trendIconImage.resizeable = false;
 
   const bedsLabel = list.addStack();
