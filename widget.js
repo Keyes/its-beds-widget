@@ -73,7 +73,7 @@ async function createWidget(items) {
     const updatedIcon = SFSymbol.named('arrow.clockwise');
     updatedIcon.applyFont(Font.regularSystemFont(9));
 
-    const updatedIconImage = percentLabel.addImage(updatedIcon.image);
+    const updatedIconImage = updated.addImage(updatedIcon.image);
     updatedIconImage.tintColor = getPercentageColor(data.used);
     updatedIconImage.imageSize = new Size(9, 9);
     updatedIconImage.resizeable = false;
