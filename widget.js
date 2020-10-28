@@ -33,7 +33,8 @@ async function createWidget(items) {
 
   const widgetIcon = SFSymbol.named('bed.double');
   widgetIcon.applyFont(Font.mediumSystemFont(12));
-  header.addImage(widgetIcon.image);
+  const widgetIconImage = header.addImage(widgetIcon.image);
+  widgetIconImage.tintColor = Color.white();
 
   const headerText = header.addText("Freie ITS-Betten");
   headerText.font = Font.mediumSystemFont(12);
