@@ -35,10 +35,10 @@ async function createWidget(items) {
   widgetIcon.applyFont(Font.mediumSystemFont(12));
   const widgetIconImage = header.addImage(widgetIcon.image);
   widgetIconImage.tintColor = Color.white();
-  widgetIconImage.imageSize = new Size(10, 10);
+  widgetIconImage.imageSize = new Size(12, 12);
   widgetIconImage.resizeable = false;
 
-  const headerText = header.addText("Freie ITS-Betten");
+  const headerText = header.addText(" Freie ITS-Betten");
   headerText.font = Font.mediumSystemFont(12);
 
   if (data) {
