@@ -65,9 +65,23 @@ async function createWidget(items) {
     dateFormatter.useShortDateStyle();
     dateFormatter.useShortTimeStyle();
 
-    const updated = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
-    updated.font = Font.regularSystemFont(9);
-    updated.textColor = Color.gray();
+    const updated = list.addStack();
+    updated.layoutHorizontally();
+    updated.centerAlignContent();
+    updated.useDefaultPadding();
+
+    const updatedIcon = SFSymbol.named('arrow.clockwise');
+    updatedIcon.applyFont(Font.regularSystemFont(9));
+
+    const updatedIconImage = percentLabel.addImage(updatedIcon.image);
+    updatedIconImage.tintColor = getPercentageColor(data.used);
+    updatedIconImage.imageSize = new Size(9, 9);
+    updatedIconImage.resizeable = false;
+
+    // const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
+    const updatedLabel = updated.addText(` ${dateFormatter.string(new Date(data.overall.updated))}`);
+    updatedLabel.font = Font.regularSystemFont(9);
+    updatedLabel.textColor = Color.gray();
   } else {
     list.addSpacer();
     list.addText("Daten nicht verfügbar");
@@ -88,7 +102,7 @@ function renderDatablock(list, data, weekData) {
   label.textColor = getPercentageColor(data.used);
 
   const trendIcon = SFSymbol.named(getBedsTrendIcon(data, weekData));
-  trendIcon.applyFont(Font.mediumSystemFont(22));
+  trendIcon.applyFont(Font.mediumSystemFont(20));
 
   const trendIconImage = percentLabel.addImage(trendIcon.image);
   trendIconImage.tintColor = getPercentageColor(data.used);
