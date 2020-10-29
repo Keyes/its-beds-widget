@@ -15,18 +15,33 @@ const CONFIG = Object.assign({}, defaultCfg, arguments[0]);
 init();
 
 async function init() {
+  if (CONFIG.debug) console.log('init called');
   const widget = await createWidget();
   if (!config.runsInWidget) await widget.presentSmall();
 
   Script.setWidget(widget);
   Script.complete();
+
+  if (CONFIG.debug) console.log('complete');
 }
 
 async function createWidget(items) {
+  if (CONFIG.debug) console.log('createWidget called');
+
   const data = await getData();
   const list = new ListWidget();
-  const header = list.addText("🛏 Freie ITS-Betten");
-  header.font = Font.mediumSystemFont(12);
+  // list.setPadding(20,-20,20,-20);
+
+  if (CONFIG.debug) console.log('data received');
+
+  const header = newStack(list, 4);
+
+  addIcon('stethoscope', header, 13, Color.white());
+
+  const headerText = header.addText('Freie ITS-Betten');
+  headerText.font = Font.mediumSystemFont(12);
+
+  if (CONFIG.debug) console.log('base constructed');
 
   if (data) {
     list.addSpacer();
@@ -38,23 +53,37 @@ async function createWidget(items) {
     if (data.state) {
       weekData.state = saveLoadData(data.state, data.state.shortName);
 
+      if (CONFIG.debug) {
+        console.log('render state datablock');
+        console.log(data.state);
+        console.log(weekData.state);
+      }
+
       renderDatablock(list, data.state, weekData.state);
       
       list.addSpacer(4);
+    }
+
+    if (CONFIG.debug) {
+      console.log('render overall datablock');
+      console.log(data.overall);
+      console.log(weekData.overall);
     }
 
     renderDatablock(list, data.overall, weekData.overall);
 
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
 
+    if (CONFIG.debug) console.log('render updated block');
+
     list.addSpacer(6);
     const dateFormatter = new DateFormatter();
     dateFormatter.useShortDateStyle();
     dateFormatter.useShortTimeStyle();
 
-    const updated = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
-    updated.font = Font.regularSystemFont(9);
-    updated.textColor = Color.gray();
+    const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
+    updatedLabel.font = Font.regularSystemFont(9);
+    updatedLabel.textColor = Color.gray();
   } else {
     list.addSpacer();
     list.addText("Daten nicht verfügbar");
@@ -64,31 +93,62 @@ async function createWidget(items) {
 }
 
 function renderDatablock(list, data, weekData) {
-  const label = list.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
-  label.font = Font.mediumSystemFont(22);
-  label.textColor = getPercentageColor(data.used);
+  const percentLabel = newStack(list, 4);
+  const datablockColor = getPercentageColor(data.used);
 
-  const bedsLabel = list.addStack();
-  bedsLabel.layoutHorizontally();
-  bedsLabel.centerAlignContent();
-  bedsLabel.useDefaultPadding();
+  if (CONFIG.debug) console.log('render percentLabel');
+
+  // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
+  const label = percentLabel.addText(`${data.used.toFixed(2)}%`);
+  label.font = Font.mediumSystemFont(22);
+  label.textColor = datablockColor;
+  
+  const trendIconName = getBedsTrendIcon(data, weekData);
+
+  if (CONFIG.debug) {
+    console.log('render trend icon');
+    console.log(trendIconName);
+  }
+
+  if (trendIconName) {
+    addIcon(trendIconName, percentLabel, 15, datablockColor);
+  }
+
+  if (CONFIG.debug) console.log('render number stack');
+
+  const bedsLabel = newStack(list, 2);
 
   if (CONFIG.layout === 'extended') {
-    const location = bedsLabel.addText((data.shortName || 'DE') + ' ');
+    if (CONFIG.debug) console.log('render extended datablock');
+
+    const location = bedsLabel.addText((data.shortName || 'DE'));
     location.font = Font.semiboldSystemFont(10);
-    location.textColor = Color.lightGray();
+    // location.textColor = Color.lightGray();
+
+    if (CONFIG.debug) console.log('absolute numbers');
 
     const absoluteLabel = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
     absoluteLabel.font = Font.mediumSystemFont(10);
-    absoluteLabel.textColor = getPercentageColor(data.used);
+    absoluteLabel.textColor = datablockColor;
 
-    const relativeLabel = bedsLabel.addText(getBedsTrendAbsolute(data, weekData));
+    const bedTrendsAbsolute = getBedsTrendAbsolute(data, weekData);
+
+    if (CONFIG.debug) {
+      console.log('relative number');
+      console.log(bedTrendsAbsolute);
+    }
+
+    const relativeLabel = bedsLabel.addText(bedTrendsAbsolute);
     relativeLabel.font = Font.mediumSystemFont(10);
     relativeLabel.textColor = Color.gray();
   } else {
+    if (CONFIG.debug) console.log('render simple datablock');
+
     const location = bedsLabel.addText(data.name || 'Deutschland');
     location.font = Font.lightSystemFont(12);
   }
+
+  if (CONFIG.debug) console.log('render datablock complete');
 }
 
 function getPercentageColor(value) {
@@ -97,6 +157,8 @@ function getPercentageColor(value) {
 
 async function getData() {
   try {
+    if (CONFIG.debug) console.log('try getting data');
+
     let foundData;
     
     if (args.widgetParameter) {
@@ -108,15 +170,27 @@ async function getData() {
 
     return foundData;
   } catch (e) {
+    if (CONFIG.debug) { 
+      console.log('error getting data');
+      console.log(e);
+    }
+
     return null;
   }
 }
 
 async function getLocation() {
   try {
+    if (CONFIG.debug) console.log('try getting location');
+
     Location.setAccuracyToThreeKilometers();
     return await Location.current();
   } catch (e) {
+    if (CONFIG.debug) {
+      console.log('error getting location');
+      console.log(e);
+    }
+
     return null;
   }
 }
@@ -133,12 +207,34 @@ function getBedsTrend(data, weekdata) {
   return bedsTrend;
 }
 
-function getBedsTrendAbsolute(data, weekdata) {
+function getBedsTrendIcon(data, weekdata) {
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
 
     if (prevData) {
-      const bedsTrend = (data.absolute.free - prevData.absolute.free);
+      if (data.absolute.free === prevData.absolute.free) return;
+      if (data.absolute.free < prevData.absolute.free) return 'chevron.down';
+      else return 'chevron.up';
+    }
+  }
+}
+
+function getBedsTrendAbsolute(data, weekdata) {
+  if (Object.keys(weekdata).length > 0) {
+    const prevData = getDataForDate(weekdata);
+
+    if (CONFIG.debug) {
+      console.log('getBedsTrendAbsolute');
+      console.log(prevData);
+    }
+
+    if (prevData) {
+      let bedsTrend = (data.absolute.free - prevData.absolute.free);
+
+      if (CONFIG.debug) {
+        console.log(bedsTrend);
+      }
+
       if (bedsTrend === 0) return '';
       if (bedsTrend > 0) bedsTrend = `+${bedsTrend}`;
 
@@ -155,11 +251,22 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   const today = new Date();
   const todayDateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
+  if (CONFIG.debug) {
+    console.log('getDataForDate');
+    console.log(todayDateKey);
+  }
+
   if (typeof weekdata[todayDateKey] === 'undefined') dayOffset = 2;
 
   if (yesterday) {
     today.setDate(today.getDate() - dayOffset);
     dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  }
+
+  if (CONFIG.debug) {
+    console.log(dateKey);
+    console.log('getDataForDate result:');
+    // console.log(weekdata[dateKey]);
   }
 
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
@@ -212,6 +319,26 @@ function getFM(suffix) {
   }
 
   return { fm, path };
+}
+
+function addIcon(iconName, parent, size, color) {
+  const widgetIcon = SFSymbol.named(iconName);
+  widgetIcon.applyFont(Font.mediumSystemFont(22));
+
+  const widgetIconImage = parent.addImage(widgetIcon.image);
+  if (color) widgetIconImage.tintColor = color;
+  widgetIconImage.imageSize = new Size(size, size);
+  widgetIconImage.resizeable = false;
+}
+
+function newStack(parent, spacing) {
+  const createdStack = parent.addStack();
+  createdStack.layoutHorizontally();
+  createdStack.centerAlignContent();
+  createdStack.setPadding(0, 0, 0, 0);
+  createdStack.spacing = spacing;
+
+  return createdStack;
 }
 
 function getFilePath(fm, suffix) {
