@@ -34,21 +34,21 @@ async function createWidget(items) {
 
   if (CONFIG.debug) console.log('data received');
 
-  // const header = list.addStack();
-  // header.layoutHorizontally();
-  // header.centerAlignContent();
-  // header.setPadding(0,0,0,0);
-  // header.spacing = 4;
+  const header = list.addStack();
+  header.layoutHorizontally();
+  header.centerAlignContent();
+  header.setPadding(0,0,0,0);
+  header.spacing = 4;
 
-  // const widgetIcon = SFSymbol.named('bed.double');
-  // widgetIcon.applyFont(Font.mediumSystemFont(12));
+  const widgetIcon = SFSymbol.named('stethoscope');
+  widgetIcon.applyFont(Font.mediumSystemFont(12));
 
-  // const widgetIconImage = header.addImage(widgetIcon.image);
-  // widgetIconImage.tintColor = Color.white();
-  // widgetIconImage.imageSize = new Size(13, 13);
-  // widgetIconImage.resizeable = false;
+  const widgetIconImage = header.addImage(widgetIcon.image);
+  widgetIconImage.tintColor = Color.white();
+  widgetIconImage.imageSize = new Size(13, 13);
+  widgetIconImage.resizeable = false;
 
-  const headerText = list.addText('Freie ITS-Betten');
+  const headerText = header.addText('Freie ITS-Betten');
   headerText.font = Font.mediumSystemFont(12);
 
   if (CONFIG.debug) console.log('base constructed');
