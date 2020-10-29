@@ -127,7 +127,10 @@ function renderDatablock(list, data, weekData) {
   label.font = Font.mediumSystemFont(22);
   label.textColor = getPercentageColor(data.used);
 
-  if (CONFIG.debug) console.log('render trend icon');
+  if (CONFIG.debug) {
+    console.log('render trend icon');
+    console.log(getBedsTrendIcon(data, weekData));
+  }
 
   const trendIcon = SFSymbol.named(getBedsTrendIcon(data, weekData));
   trendIcon.applyFont(Font.regularSystemFont(15));
