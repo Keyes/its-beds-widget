@@ -164,10 +164,13 @@ function renderDatablock(list, data, weekData) {
     location.font = Font.semiboldSystemFont(10);
     // location.textColor = Color.lightGray();
 
+    if (CONFIG.debug) console.log('absolute numbers');
+
     const absoluteLabel = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
     absoluteLabel.font = Font.mediumSystemFont(10);
     absoluteLabel.textColor = getPercentageColor(data.used);
 
+    if (CONFIG.debug) console.log('relative number');
     const relativeLabel = bedsLabel.addText(getBedsTrendAbsolute(data, weekData));
     relativeLabel.font = Font.mediumSystemFont(10);
     relativeLabel.textColor = Color.gray();
