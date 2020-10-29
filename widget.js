@@ -268,7 +268,7 @@ function getBedsTrendAbsolute(data, weekdata) {
     }
 
     if (prevData) {
-      const bedsTrend = (data.absolute.free - prevData.absolute.free);
+      let bedsTrend = (data.absolute.free - prevData.absolute.free);
 
       if (CONFIG.debug) {
         console.log(bedsTrend);
