@@ -84,6 +84,8 @@ async function createWidget(items) {
 
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
 
+    console.log('render updated block');
+
     list.addSpacer(6);
     const dateFormatter = new DateFormatter();
     dateFormatter.useShortDateStyle();
@@ -103,7 +105,6 @@ async function createWidget(items) {
     // updatedIconImage.imageSize = new Size(7, 7);
     // updatedIconImage.resizeable = false;
 
-    console.log('render updated block');
 
     const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
     // const updatedLabel = updated.addText(`${dateFormatter.string(new Date(data.overall.updated))}`);
@@ -176,6 +177,8 @@ function renderDatablock(list, data, weekData) {
     const location = bedsLabel.addText(data.name || 'Deutschland');
     location.font = Font.lightSystemFont(12);
   }
+
+  if (CONFIG.debug) console.log('render datablock complete');
 }
 
 function getPercentageColor(value) {
