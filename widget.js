@@ -256,8 +256,18 @@ function getBedsTrendAbsolute(data, weekdata) {
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
 
+    if (CONFIG.debug) {
+      console.log('getBedsTrendAbsolute');
+      console.log(prevData);
+    }
+
     if (prevData) {
       const bedsTrend = (data.absolute.free - prevData.absolute.free);
+
+      if (CONFIG.debug) {
+        console.log(bedsTrend);
+      }
+
       if (bedsTrend === 0) return '';
       if (bedsTrend > 0) bedsTrend = `+${bedsTrend}`;
 
