@@ -260,11 +260,20 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   const today = new Date();
   const todayDateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
 
+  if (CONFIG.debug) {
+    console.log('getDataForDate');
+    console.log(todayDateKey);
+  }
+
   if (typeof weekdata[todayDateKey] === 'undefined') dayOffset = 2;
 
   if (yesterday) {
     today.setDate(today.getDate() - dayOffset);
     dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  }
+
+  if (CONFIG.debug) {
+    console.log(dateKey);
   }
 
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
