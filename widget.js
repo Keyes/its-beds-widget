@@ -120,10 +120,14 @@ function renderDatablock(list, data, weekData) {
   percentLabel.setPadding(0,0,0,0);
   percentLabel.spacing = 4;
 
+  if (CONFIG.debug) console.log('render percentLabel');
+
   // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
   const label = percentLabel.addText(`${data.used.toFixed(2)}%`);
   label.font = Font.mediumSystemFont(22);
   label.textColor = getPercentageColor(data.used);
+
+  if (CONFIG.debug) console.log('render trend icon');
 
   const trendIcon = SFSymbol.named(getBedsTrendIcon(data, weekData));
   trendIcon.applyFont(Font.regularSystemFont(15));
@@ -133,12 +137,13 @@ function renderDatablock(list, data, weekData) {
   trendIconImage.imageSize = new Size(12, 15);
   trendIconImage.resizeable = false;
 
+  if (CONFIG.debug) console.log('render number stack');
+
   const bedsLabel = list.addStack();
   bedsLabel.layoutHorizontally();
   bedsLabel.centerAlignContent();
   bedsLabel.setPadding(0,0,0,0);
   bedsLabel.spacing = 2;
-
 
   if (CONFIG.layout === 'extended') {
     if (CONFIG.debug) console.log('render extended datablock');
