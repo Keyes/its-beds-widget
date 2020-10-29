@@ -236,8 +236,8 @@ function getBedsTrendIcon(data, weekdata) {
 
     if (prevData) {
       if (data.absolute.free === prevData.absolute.free) return;
-      if (data.absolute.free < prevData.absolute.free) return 'arrow.down.circle';
-      else return 'arrow.up.circle';
+      if (data.absolute.free < prevData.absolute.free) return 'chevron.down';
+      else return 'chevron.up';
     }
   }
 }
