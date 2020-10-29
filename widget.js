@@ -91,23 +91,7 @@ async function createWidget(items) {
     dateFormatter.useShortDateStyle();
     dateFormatter.useShortTimeStyle();
 
-    const updated = list.addStack();
-    updated.layoutHorizontally();
-    updated.centerAlignContent();
-    updated.setPadding(0,0,0,0);
-    updated.spacing = 2;
-
-    const updatedIcon = SFSymbol.named('arrow.clockwise');
-    updatedIcon.applyFont(Font.regularSystemFont(7));
-
-    const updatedIconImage = updated.addImage(updatedIcon.image);
-    updatedIconImage.tintColor = Color.gray();
-    updatedIconImage.imageSize = new Size(7, 7);
-    updatedIconImage.resizeable = false;
-
-
-    // const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
-    const updatedLabel = updated.addText(`${dateFormatter.string(new Date(data.overall.updated))}`);
+    const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
     updatedLabel.font = Font.regularSystemFont(9);
     updatedLabel.textColor = Color.gray();
   } else {
@@ -141,11 +125,11 @@ function renderDatablock(list, data, weekData) {
 
   if (trendIconName) {
     const trendIcon = SFSymbol.named(trendIconName);
-    trendIcon.applyFont(Font.regularSystemFont(15));
+    trendIcon.applyFont(Font.lightSystemFont(15));
   
     const trendIconImage = percentLabel.addImage(trendIcon.image);
     trendIconImage.tintColor = getPercentageColor(data.used);
-    trendIconImage.imageSize = new Size(5, 15);
+    trendIconImage.imageSize = new Size(10, 15);
     trendIconImage.resizeable = false;
   }
 
@@ -252,8 +236,8 @@ function getBedsTrendIcon(data, weekdata) {
 
     if (prevData) {
       if (data.absolute.free === prevData.absolute.free) return;
-      if (data.absolute.free < prevData.absolute.free) return 'arrow.down';
-      else return 'arrow.up';
+      if (data.absolute.free < prevData.absolute.free) return 'arrow.down.circle';
+      else return 'arrow.up.circle';
     }
   }
 }
