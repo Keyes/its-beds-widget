@@ -132,13 +132,17 @@ function renderDatablock(list, data, weekData) {
     console.log(getBedsTrendIcon(data, weekData));
   }
 
-  const trendIcon = SFSymbol.named(getBedsTrendIcon(data, weekData));
-  trendIcon.applyFont(Font.regularSystemFont(15));
+  const trendIconName = getBedsTrendIcon(data, weekData);
 
-  const trendIconImage = percentLabel.addImage(trendIcon.image);
-  trendIconImage.tintColor = getPercentageColor(data.used);
-  trendIconImage.imageSize = new Size(12, 15);
-  trendIconImage.resizeable = false;
+  if (trendIconName) {
+    const trendIcon = SFSymbol.named(trendIconName);
+    trendIcon.applyFont(Font.regularSystemFont(15));
+  
+    const trendIconImage = percentLabel.addImage(trendIcon.image);
+    trendIconImage.tintColor = getPercentageColor(data.used);
+    trendIconImage.imageSize = new Size(12, 15);
+    trendIconImage.resizeable = false;
+  }
 
   if (CONFIG.debug) console.log('render number stack');
 
