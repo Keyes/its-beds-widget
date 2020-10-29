@@ -34,19 +34,9 @@ async function createWidget(items) {
 
   if (CONFIG.debug) console.log('data received');
 
-  const header = list.addStack();
-  header.layoutHorizontally();
-  header.centerAlignContent();
-  header.setPadding(0,0,0,0);
-  header.spacing = 4;
+  const header = newStack(list, 4);
 
-  const widgetIcon = SFSymbol.named('stethoscope');
-  widgetIcon.applyFont(Font.mediumSystemFont(12));
-
-  const widgetIconImage = header.addImage(widgetIcon.image);
-  widgetIconImage.tintColor = Color.white();
-  widgetIconImage.imageSize = new Size(13, 13);
-  widgetIconImage.resizeable = false;
+  addIcon('stethoscope', header, 13, Color.white());
 
   const headerText = header.addText('Freie ITS-Betten');
   headerText.font = Font.mediumSystemFont(12);
@@ -103,18 +93,15 @@ async function createWidget(items) {
 }
 
 function renderDatablock(list, data, weekData) {
-  const percentLabel = list.addStack();
-  percentLabel.layoutHorizontally();
-  percentLabel.centerAlignContent();
-  percentLabel.setPadding(0,0,0,0);
-  percentLabel.spacing = 4;
+  const percentLabel = newStack(list, 4);
+  const datablockColor = getPercentageColor(data.used);
 
   if (CONFIG.debug) console.log('render percentLabel');
 
   // const label = percentLabel.addText(`${data.used.toFixed(2)}% ${getBedsTrend(data, weekData)}`);
   const label = percentLabel.addText(`${data.used.toFixed(2)}%`);
   label.font = Font.mediumSystemFont(22);
-  label.textColor = getPercentageColor(data.used);
+  label.textColor = datablockColor;
   
   const trendIconName = getBedsTrendIcon(data, weekData);
 
@@ -124,22 +111,12 @@ function renderDatablock(list, data, weekData) {
   }
 
   if (trendIconName) {
-    const trendIcon = SFSymbol.named(trendIconName);
-    trendIcon.applyFont(Font.lightSystemFont(15));
-  
-    const trendIconImage = percentLabel.addImage(trendIcon.image);
-    trendIconImage.tintColor = getPercentageColor(data.used);
-    trendIconImage.imageSize = new Size(15, 15);
-    trendIconImage.resizeable = false;
+    addIcon(trendIconName, percentLabel, 15, datablockColor);
   }
 
   if (CONFIG.debug) console.log('render number stack');
 
-  const bedsLabel = list.addStack();
-  bedsLabel.layoutHorizontally();
-  bedsLabel.centerAlignContent();
-  bedsLabel.setPadding(0,0,0,0);
-  bedsLabel.spacing = 2;
+  const bedsLabel = newStack(list, 2);
 
   if (CONFIG.layout === 'extended') {
     if (CONFIG.debug) console.log('render extended datablock');
@@ -152,7 +129,7 @@ function renderDatablock(list, data, weekData) {
 
     const absoluteLabel = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
     absoluteLabel.font = Font.mediumSystemFont(10);
-    absoluteLabel.textColor = getPercentageColor(data.used);
+    absoluteLabel.textColor = datablockColor;
 
     const bedTrendsAbsolute = getBedsTrendAbsolute(data, weekData);
 
@@ -342,6 +319,26 @@ function getFM(suffix) {
   }
 
   return { fm, path };
+}
+
+function addIcon(iconName, parent, size, color) {
+  const widgetIcon = SFSymbol.named(iconName);
+  widgetIcon.applyFont(Font.mediumSystemFont(22));
+
+  const widgetIconImage = parent.addImage(widgetIcon.image);
+  if (color) widgetIconImage.tintColor = color;
+  widgetIconImage.imageSize = new Size(size, size);
+  widgetIconImage.resizeable = false;
+}
+
+function newStack(parent, spacing) {
+  const createdStack = parent.addStack();
+  createdStack.layoutHorizontally();
+  createdStack.centerAlignContent();
+  createdStack.setPadding(0, 0, 0, 0);
+  createdStack.spacing = spacing;
+
+  return createdStack;
 }
 
 function getFilePath(fm, suffix) {
