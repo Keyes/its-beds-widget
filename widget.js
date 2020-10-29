@@ -28,7 +28,7 @@ async function createWidget(items) {
 
   const data = await getData();
   const list = new ListWidget();
-  list.setPadding(20,-5,20,-5);
+  list.setPadding(20,-20,20,-20);
 
   if (CONFIG.debug) console.log('data received');
 
