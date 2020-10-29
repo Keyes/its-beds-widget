@@ -22,7 +22,7 @@ async function init() {
   Script.setWidget(widget);
   Script.complete();
 
-  console.log('complete');
+  if (CONFIG.debug) console.log('complete');
 }
 
 async function createWidget(items) {
@@ -84,7 +84,7 @@ async function createWidget(items) {
 
     list.refreshAfterDate = new Date(Date.now() + (1000 * 60 * 30));
 
-    console.log('render updated block');
+    if (CONFIG.debug) console.log('render updated block');
 
     list.addSpacer(6);
     const dateFormatter = new DateFormatter();
