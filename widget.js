@@ -28,25 +28,25 @@ async function createWidget(items) {
 
   const data = await getData();
   const list = new ListWidget();
-  list.setPadding(20,-20,20,-20);
+  // list.setPadding(20,-20,20,-20);
 
   if (CONFIG.debug) console.log('data received');
 
-  const header = list.addStack();
-  header.layoutHorizontally();
-  header.centerAlignContent();
-  header.setPadding(0,0,0,0);
-  header.spacing = 4;
+  // const header = list.addStack();
+  // header.layoutHorizontally();
+  // header.centerAlignContent();
+  // header.setPadding(0,0,0,0);
+  // header.spacing = 4;
 
-  const widgetIcon = SFSymbol.named('bed.double');
-  widgetIcon.applyFont(Font.mediumSystemFont(12));
+  // const widgetIcon = SFSymbol.named('bed.double');
+  // widgetIcon.applyFont(Font.mediumSystemFont(12));
 
-  const widgetIconImage = header.addImage(widgetIcon.image);
-  widgetIconImage.tintColor = Color.white();
-  widgetIconImage.imageSize = new Size(13, 13);
-  widgetIconImage.resizeable = false;
+  // const widgetIconImage = header.addImage(widgetIcon.image);
+  // widgetIconImage.tintColor = Color.white();
+  // widgetIconImage.imageSize = new Size(13, 13);
+  // widgetIconImage.resizeable = false;
 
-  const headerText = header.addText('Freie ITS-Betten');
+  const headerText = list.addText('Freie ITS-Betten');
   headerText.font = Font.mediumSystemFont(12);
 
   if (CONFIG.debug) console.log('base constructed');
@@ -79,22 +79,22 @@ async function createWidget(items) {
     dateFormatter.useShortDateStyle();
     dateFormatter.useShortTimeStyle();
 
-    const updated = list.addStack();
-    updated.layoutHorizontally();
-    updated.centerAlignContent();
-    updated.setPadding(0,0,0,0);
-    updated.spacing = 2;
+    // const updated = list.addStack();
+    // updated.layoutHorizontally();
+    // updated.centerAlignContent();
+    // updated.setPadding(0,0,0,0);
+    // updated.spacing = 2;
 
-    const updatedIcon = SFSymbol.named('arrow.clockwise');
-    updatedIcon.applyFont(Font.regularSystemFont(7));
+    // const updatedIcon = SFSymbol.named('arrow.clockwise');
+    // updatedIcon.applyFont(Font.regularSystemFont(7));
 
-    const updatedIconImage = updated.addImage(updatedIcon.image);
-    updatedIconImage.tintColor = Color.gray();
-    updatedIconImage.imageSize = new Size(7, 7);
-    updatedIconImage.resizeable = false;
+    // const updatedIconImage = updated.addImage(updatedIcon.image);
+    // updatedIconImage.tintColor = Color.gray();
+    // updatedIconImage.imageSize = new Size(7, 7);
+    // updatedIconImage.resizeable = false;
 
-    // const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
-    const updatedLabel = updated.addText(`${dateFormatter.string(new Date(data.overall.updated))}`);
+    const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
+    // const updatedLabel = updated.addText(`${dateFormatter.string(new Date(data.overall.updated))}`);
     updatedLabel.font = Font.regularSystemFont(9);
     updatedLabel.textColor = Color.gray();
   } else {
@@ -137,7 +137,7 @@ function renderDatablock(list, data, weekData) {
 
     const location = bedsLabel.addText((data.shortName || 'DE'));
     location.font = Font.semiboldSystemFont(10);
-    location.textColor = Color.lightGray();
+    // location.textColor = Color.lightGray();
 
     const absoluteLabel = bedsLabel.addText(`${data.absolute.free}/${data.absolute.total}`);
     absoluteLabel.font = Font.mediumSystemFont(10);
