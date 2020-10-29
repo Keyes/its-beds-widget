@@ -274,6 +274,8 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
 
   if (CONFIG.debug) {
     console.log(dateKey);
+    console.log('getDataForDate result:');
+    console.log(weekdata[dateKey]);
   }
 
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
