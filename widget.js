@@ -21,6 +21,8 @@ async function init() {
 
   Script.setWidget(widget);
   Script.complete();
+
+  console.log('complete');
 }
 
 async function createWidget(items) {
@@ -101,6 +103,8 @@ async function createWidget(items) {
     // updatedIconImage.imageSize = new Size(7, 7);
     // updatedIconImage.resizeable = false;
 
+    console.log('render updated block');
+
     const updatedLabel = list.addText(`↻ ${dateFormatter.string(new Date(data.overall.updated))}`);
     // const updatedLabel = updated.addText(`${dateFormatter.string(new Date(data.overall.updated))}`);
     updatedLabel.font = Font.regularSystemFont(9);
@@ -126,13 +130,13 @@ function renderDatablock(list, data, weekData) {
   const label = percentLabel.addText(`${data.used.toFixed(2)}%`);
   label.font = Font.mediumSystemFont(22);
   label.textColor = getPercentageColor(data.used);
+  
+  const trendIconName = getBedsTrendIcon(data, weekData);
 
   if (CONFIG.debug) {
     console.log('render trend icon');
-    console.log(getBedsTrendIcon(data, weekData));
+    console.log(trendIconName);
   }
-
-  const trendIconName = getBedsTrendIcon(data, weekData);
 
   if (trendIconName) {
     const trendIcon = SFSymbol.named(trendIconName);
@@ -279,7 +283,7 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   if (CONFIG.debug) {
     console.log(dateKey);
     console.log('getDataForDate result:');
-    console.log(weekdata[dateKey]);
+    // console.log(weekdata[dateKey]);
   }
 
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
