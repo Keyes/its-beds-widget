@@ -145,7 +145,7 @@ function renderDatablock(list, data, weekData) {
   
     const trendIconImage = percentLabel.addImage(trendIcon.image);
     trendIconImage.tintColor = getPercentageColor(data.used);
-    trendIconImage.imageSize = new Size(12, 15);
+    trendIconImage.imageSize = new Size(10, 15);
     trendIconImage.resizeable = false;
   }
 
