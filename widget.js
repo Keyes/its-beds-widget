@@ -170,8 +170,14 @@ function renderDatablock(list, data, weekData) {
     absoluteLabel.font = Font.mediumSystemFont(10);
     absoluteLabel.textColor = getPercentageColor(data.used);
 
-    if (CONFIG.debug) console.log('relative number');
-    const relativeLabel = bedsLabel.addText(getBedsTrendAbsolute(data, weekData));
+    const bedTrendsAbsolute = getBedsTrendAbsolute(data, weekData);
+
+    if (CONFIG.debug) {
+      console.log('relative number');
+      console.log(bedTrendsAbsolute);
+    }
+
+    const relativeLabel = bedsLabel.addText(bedTrendsAbsolute);
     relativeLabel.font = Font.mediumSystemFont(10);
     relativeLabel.textColor = Color.gray();
   } else {
