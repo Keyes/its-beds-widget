@@ -36,7 +36,9 @@ async function createWidget(items) {
 
   const header = newStack(list, 4);
 
-  addIcon('stethoscope', header, 13, Color.white());
+  let iconColor = Color.black();
+  if(Device.isUsingDarkAppearance()) iconColor = Color.white();
+  addIcon('stethoscope', header, 13, iconColor);
 
   const headerText = header.addText('Freie ITS-Betten');
   headerText.font = Font.mediumSystemFont(12);
