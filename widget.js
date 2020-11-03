@@ -251,18 +251,19 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   let dateKey = datestr;
   let dayOffset = 1;
   const today = new Date();
-  const todayDateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+  const todayDateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${("0" + today.getDate()).slice(-2)}`;
 
   if (CONFIG.debug) {
     console.log('getDataForDate');
     console.log(todayDateKey);
+    console.log(Object.keys(weekdata));
   }
 
   if (typeof weekdata[todayDateKey] === 'undefined') dayOffset = 2;
 
   if (yesterday) {
     today.setDate(today.getDate() - dayOffset);
-    dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
+    dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${("0" + today.getDate()).slice(-2)}`;
   }
 
   if (CONFIG.debug) {
