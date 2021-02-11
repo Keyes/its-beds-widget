@@ -7,7 +7,7 @@ const getApiUrl = (location, state) => {
 }
 
 const defaultCfg = {
-  layout: 'simple',
+  layout: 'simple'
 };
 
 const CONFIG = Object.assign({}, defaultCfg, arguments[0]);
@@ -52,7 +52,7 @@ async function createWidget(items) {
       overall: saveLoadData(data.overall, 'DE')
     };
     
-    if (data.state) {
+    if (data.state) {     
       weekData.state = saveLoadData(data.state, data.state.shortName);
 
       if (CONFIG.debug) {
@@ -159,7 +159,10 @@ function getPercentageColor(value) {
 
 async function getData() {
   try {
-    if (CONFIG.debug) console.log('try getting data');
+    if (CONFIG.debug) {
+        console.log('try getting data');
+        console.log(getApiUrl(null, args.widgetParameter));
+    }
 
     let foundData;
     
@@ -212,7 +215,7 @@ function getBedsTrend(data, weekdata) {
 function getBedsTrendIcon(data, weekdata) {
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
-
+    
     if (prevData) {
       if (data.absolute.free === prevData.absolute.free) return;
       if (data.absolute.free < prevData.absolute.free) return 'chevron.down';
@@ -251,7 +254,7 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   let dateKey = datestr;
   let dayOffset = 1;
   const today = new Date();
-  const todayDateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${("0" + today.getDate()).slice(-2)}`;
+  const todayDateKey = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + today.getDate()).slice(-2)}`;
 
   if (CONFIG.debug) {
     console.log('getDataForDate');
@@ -263,13 +266,13 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
 
   if (yesterday) {
     today.setDate(today.getDate() - dayOffset);
-    dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${("0" + today.getDate()).slice(-2)}`;
+    dateKey = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + today.getDate()).slice(-2)}`;
   }
 
   if (CONFIG.debug) {
     console.log(dateKey);
     console.log('getDataForDate result:');
-    // console.log(weekdata[dateKey]);
+    console.log(weekdata[dateKey]);
   }
 
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
