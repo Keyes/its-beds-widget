@@ -52,10 +52,7 @@ async function createWidget(items) {
       overall: saveLoadData(data.overall, 'DE')
     };
     
-    console.log('PENIS');
-    
-    if (data.state) {
-      
+    if (data.state) {     
       weekData.state = saveLoadData(data.state, data.state.shortName);
 
       if (CONFIG.debug) {
@@ -216,8 +213,6 @@ function getBedsTrend(data, weekdata) {
 }
 
 function getBedsTrendIcon(data, weekdata) {
-  console.log('getbendstrebfiiiiiicoooooon');
-  
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
     
@@ -286,8 +281,6 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
 }
 
 function saveLoadData(newData, suffix = '') {
-  console.log('saveloaddata');
-  console.log(newData);
   const updated = newData.updated.substr(0, 10);
   const loadedData = loadData(suffix);
 
