@@ -7,8 +7,7 @@ const getApiUrl = (location, state) => {
 }
 
 const defaultCfg = {
-  layout: 'extended',
-  debug: true,
+  layout: 'simple'
 };
 
 const CONFIG = Object.assign({}, defaultCfg, arguments[0]);
