@@ -48,9 +48,6 @@ async function createWidget(items) {
   if (data) {
     list.addSpacer();
 
-    console.log('PENIS');
-    console.log(data);
-
     let weekData = { 
       overall: saveLoadData(data.overall, 'DE')
     };
@@ -224,9 +221,6 @@ function getBedsTrendIcon(data, weekdata) {
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
     
-    console.log('TRUE prrvDats');
-    console.log(prevData);
-
     if (prevData) {
       if (data.absolute.free === prevData.absolute.free) return;
       if (data.absolute.free < prevData.absolute.free) return 'chevron.down';
