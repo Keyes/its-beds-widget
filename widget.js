@@ -7,7 +7,8 @@ const getApiUrl = (location, state) => {
 }
 
 const defaultCfg = {
-  layout: 'simple',
+  layout: 'extended',
+  debug: true,
 };
 
 const CONFIG = Object.assign({}, defaultCfg, arguments[0]);
@@ -48,11 +49,17 @@ async function createWidget(items) {
   if (data) {
     list.addSpacer();
 
+    console.log('PENIS');
+    console.log(data);
+
     let weekData = { 
       overall: saveLoadData(data.overall, 'DE')
     };
     
+    console.log('PENIS');
+    
     if (data.state) {
+      
       weekData.state = saveLoadData(data.state, data.state.shortName);
 
       if (CONFIG.debug) {
@@ -159,7 +166,10 @@ function getPercentageColor(value) {
 
 async function getData() {
   try {
-    if (CONFIG.debug) console.log('try getting data');
+    if (CONFIG.debug) {
+        console.log('try getting data');
+        console.log(getApiUrl(null, args.widgetParameter));
+    }
 
     let foundData;
     
@@ -210,8 +220,13 @@ function getBedsTrend(data, weekdata) {
 }
 
 function getBedsTrendIcon(data, weekdata) {
+  console.log('getbendstrebfiiiiiicoooooon');
+  
   if (Object.keys(weekdata).length > 0) {
     const prevData = getDataForDate(weekdata);
+    
+    console.log('TRUE prrvDats');
+    console.log(prevData);
 
     if (prevData) {
       if (data.absolute.free === prevData.absolute.free) return;
@@ -251,7 +266,7 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
   let dateKey = datestr;
   let dayOffset = 1;
   const today = new Date();
-  const todayDateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${("0" + today.getDate()).slice(-2)}`;
+  const todayDateKey = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + today.getDate()).slice(-2)}`;
 
   if (CONFIG.debug) {
     console.log('getDataForDate');
@@ -263,13 +278,13 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
 
   if (yesterday) {
     today.setDate(today.getDate() - dayOffset);
-    dateKey = `${today.getFullYear()}-${today.getMonth() + 1}-${("0" + today.getDate()).slice(-2)}`;
+    dateKey = `${today.getFullYear()}-${("0" + (today.getMonth() + 1)).slice(-2)}-${("0" + today.getDate()).slice(-2)}`;
   }
 
   if (CONFIG.debug) {
     console.log(dateKey);
     console.log('getDataForDate result:');
-    // console.log(weekdata[dateKey]);
+    console.log(weekdata[dateKey]);
   }
 
   if (typeof weekdata[dateKey] !== 'undefined') return weekdata[dateKey];
@@ -278,6 +293,8 @@ function getDataForDate(weekdata, yesterday = true, datestr = '') {
 }
 
 function saveLoadData(newData, suffix = '') {
+  console.log('saveloaddata');
+  console.log(newData);
   const updated = newData.updated.substr(0, 10);
   const loadedData = loadData(suffix);
 
@@ -300,6 +317,7 @@ function saveLoadData(newData, suffix = '') {
 }
 
 function loadData(suffix) {
+  console.log('loaddata');
   const { fm, path } = getFM(suffix);
 
   if (fm.fileExists(path)) {
