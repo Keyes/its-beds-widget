@@ -303,7 +303,6 @@ function saveLoadData(newData, suffix = '') {
 }
 
 function loadData(suffix) {
-  console.log('loaddata');
   const { fm, path } = getFM(suffix);
 
   if (fm.fileExists(path)) {
